@@ -1,19 +1,25 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Header from "../components/header/header.component";
+import { Route } from "react-router-dom";
+
 import Homepage from "./homepage/homepage.component";
 import LeaderBoard from "./leaderboard/leaderboard.component";
 import GroupPage from "./group/group.component";
+import Header from "../components/header/header.component";
+import QuestionPage from "./question/question.component";
 
-function Main() {
+function Main(props) {
+  const { match } = props;
+  console.log(props);
   return (
-    <div className="App">
+    <div>
       <Header />
-      <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route exact path="/leaderboard" component={LeaderBoard} />
-        <Route exact path="/group" component={GroupPage} />
-      </Switch>
+      <Route exact path={`${match.path}`} component={Homepage} />
+      <Route path={`${match.path}/leaderboard`} component={LeaderBoard} />
+      <Route path={`${match.path}/group`} component={GroupPage} />
+      <Route
+        path={`${match.path}/question/:questionId`}
+        component={QuestionPage}
+      />
     </div>
   );
 }

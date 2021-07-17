@@ -1,7 +1,20 @@
 import React from "react";
 
-const Homepage = () => {
-  return <div>Hacker's Homepage</div>;
+import { selectCurrChallenge } from "../../redux/challenge/challenge.selectors";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+
+const Homepage = ({ challenge, match }) => {
+  return (
+    <div>
+      <h1>Hacker's Homepage</h1>
+      <span>{challenge.description}</span>
+      <div>{challenge.challengeCode}</div>
+    </div>
+  );
 };
 
-export default Homepage;
+const mapStateToProps = createStructuredSelector({
+  challenge: selectCurrChallenge,
+});
+export default connect(mapStateToProps)(Homepage);
