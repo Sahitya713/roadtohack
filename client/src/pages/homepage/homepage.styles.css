@@ -1,0 +1,55 @@
+.map {
+  min-width: 100%;
+  cursor: none;
+}
+
+.map-overlay {
+  width: 100%;
+  flex: 1 1 auto;
+}
+
+.homepage-overlay {
+  cursor: default;
+  /* background-color: bl */
+  /* opacity: 30%; */
+  /* background: rgba(0, 0, 0, 0.75); */
+  background: rgba(45, 44, 44, 0.8);
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: white;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 75%;
+  padding: 20px 30px 20px 30px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.homepage-title {
+  font-family: "Quantico", sans-serif;
+  margin-bottom: 5px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 1);
+}
+
+.homepage-desc {
+  font-family: "Roboto Mono", monospace;
+  line-height: 20px;
+  text-align: left;
+}
+
+.icon-good {
+  color: "slateblue";
+}
+
+.material-icons::before {
+  filter: drop-shadow(4px 4px 4px #000000);
+  cursor: pointer;
+  font-size: 50px;
+}
+.material-icons.good::before {
+  content: "gpp_good";
+  color: #30ff45;
+}
+.material-icons:hover::before {
+  font-size: 55px;
+}

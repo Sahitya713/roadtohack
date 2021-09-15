@@ -1,0 +1,35 @@
+.grp-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+
+.grp-img {
+  margin-top: 30px;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}
+
+.grp-name {
+  font-size: 30px;
+  font-weight: bold;
+  margin-right: 20px;
+  font-family: "Quantico", sans-serif;
+  /* position: absolute;
+  left: 50%; */
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.image-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
