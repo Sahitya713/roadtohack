@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const dotenv = require("dotenv");
 const app = require("./app");
+const enforce = require("express-sslify");
 
 // handle errors in synchronous code
 process.on("uncaughtException", (err) => {
@@ -9,7 +10,11 @@ process.on("uncaughtException", (err) => {
   console.log(err.name, err.message);
   process.exit(1);
 });
-dotenv.config({ path: "./config.env" });
+
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
+
 // dotenv.config({ path: path.resolve(__dirname, "config.env") });
 // if (process.env.NODE_ENV !== "production") {
 //   //   require("dotenv").config();
