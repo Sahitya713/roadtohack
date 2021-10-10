@@ -38,17 +38,13 @@ const limiter = rateLimit({
 app.use("/api", limiter);
 
 // BODY PARSER. Reading data from body into req.body
-app.use(express.json({ limit: "10kb" }));
+app.use(express.json());
 // reading data from form
-app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+app.use(express.urlencoded({ extended: true }));
 
 if (process.env.NODE_ENV === "production") {
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
   app.use(express.static(path.join(__dirname, "client/build")));
-
-  app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-  });
 }
 
 // compresses the json text responses, images etc should alr be compressed
@@ -59,6 +55,12 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/group", groupRouter);
 app.use("/api/v1/question", questionRouter);
 app.use("/api/v1/answer", answerRouter);
+
+if (process.env.NODE_ENV === "production") {
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
 
 app.all("*", (req, res, next) => {
   // skips all other middleware in the stack and goes straight to error handling middleware

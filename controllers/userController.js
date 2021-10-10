@@ -11,6 +11,7 @@ const AppError = require("../utils/appError");
 
 // });
 exports.getUser = catchAsync(async (req, res, next) => {
+  console.log("get user function called");
   const doc = await User.findOne({ uid: req.params.id });
 
   if (!doc) {
