@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const enforce = require("express-sslify");
 
 const app = express();
 
@@ -40,6 +41,15 @@ app.use("/api", limiter);
 app.use(express.json({ limit: "10kb" }));
 // reading data from form
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  app.use(express.static(path.join(__dirname, "client/build")));
+
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
 
 // compresses the json text responses, images etc should alr be compressed
 app.use(compression());

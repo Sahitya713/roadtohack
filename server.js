@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const path = require("path");
 const dotenv = require("dotenv");
 const app = require("./app");
-const enforce = require("express-sslify");
 
 // handle errors in synchronous code
 process.on("uncaughtException", (err) => {
@@ -39,15 +38,6 @@ mongoose
 // console.log(process.env);
 
 const port = process.env.PORT || 5000;
-
-if (process.env.NODE_ENV === "production") {
-  app.use(enforce.HTTPS({ trustProtoHeader: true }));
-  app.use(express.static(path.join(__dirname, "client/build")));
-
-  app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-  });
-}
 
 const server = app.listen(port, (error) => {
   if (error) throw error;
