@@ -32,10 +32,10 @@ export function* getUserData(userAuth) {
   try {
     console.log(uid);
     const res = yield axios({
-      url: `/api/v1/user/${uid}`,
+      url: `api/v1/user/${uid}`,
       method: "get",
     });
-    console.log("get user data");
+    console.log("get user data2");
     console.log(res.data.data);
     yield put(signInSuccess(res.data.data));
   } catch (error) {
