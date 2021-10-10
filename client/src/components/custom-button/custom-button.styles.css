@@ -10,9 +10,11 @@
   line-height: 30px;
   cursor: pointer;
   text-decoration: none;
+  border: none;
 }
 
 .custom-button:hover {
+  border: none;
   /* background-color: #d32d2d; */
   color: lightgray;
 

@@ -22,51 +22,11 @@ import GroupEditPopUp from "../../components/group-edit/group-edit-popup.compone
 // import FormInput from "../../components/form-input/form-input.component";
 
 class GroupPage extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      grpName: null,
-      grpImage: null,
-      nameActivated: false,
-    };
-  }
   componentDidMount() {
     const { fetchGroupAnswersStart, currGroup } = this.props;
 
     fetchGroupAnswersStart(currGroup._id);
   }
-
-  handleChange = (event) => {
-    const { value, name } = event.target;
-
-    this.setState({ [name]: value });
-  };
-
-  selectImage = (event) => {
-    let image = event.target.files[0];
-    this.setState({ grpImage: image });
-  };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    let { grpName, grpImage } = this.state;
-    const { currGroup, updateGroupStart } = this.props;
-    const update = {};
-    if (grpName) {
-      update["name"] = grpName;
-    }
-    if (grpImage) {
-      update["image"] = grpImage;
-    }
-
-    updateGroupStart({
-      groupId: currGroup._id,
-      group: update,
-    });
-    this.setState({ nameActivated: false });
-  };
 
   render() {
     const { isFetching, groupScores, currGroup, isEditTriggered } = this.props;

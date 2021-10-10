@@ -36,7 +36,7 @@ const Header = ({ signOutStart, toggleEdit, match }) => {
       <div className="buttons">
         {route === "group" ? (
           <CustomButton
-            style={{ "background-color": "rgb(40, 175, 40)" }}
+            style={{ backgroundColor: "rgb(40, 175, 40)" }}
             onClick={toggleEdit}
           >
             Edit

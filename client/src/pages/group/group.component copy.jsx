@@ -6,7 +6,7 @@ import "./group.styles.css";
 import { Edit, Clear } from "@material-ui/icons";
 
 import { fetchGroupAnswersStart } from "../../redux/answer/answer.actions";
-import { updateGroupStart } from "../../redux/group/group.actions";
+import { updateGroupStart, toggleEdit } from "../../redux/group/group.actions";
 import {
   selectGroupScores,
   selectIsGroupScoresFetching,
@@ -138,6 +138,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) => ({
   fetchGroupAnswersStart: (group) => dispatch(fetchGroupAnswersStart(group)),
   updateGroupStart: (group) => dispatch(updateGroupStart(group)),
+  toggleEdit: () => dispatch(toggleEdit()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupPage);
