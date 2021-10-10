@@ -29,6 +29,7 @@ class App extends React.Component {
 
   render() {
     const { currentUser, challengeStatus, isLoading } = this.props;
+    console.log(currentUser);
     return isLoading ? (
       <Spinner />
     ) : (

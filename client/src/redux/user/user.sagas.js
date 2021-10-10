@@ -35,6 +35,8 @@ export function* getUserData(userAuth) {
       url: `/api/v1/user/${uid}`,
       method: "get",
     });
+    console.log("get user data");
+    console.log(res.data.data);
     yield put(signInSuccess(res.data.data));
   } catch (error) {
     yield put(signInFailure(error));
