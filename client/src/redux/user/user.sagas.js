@@ -36,6 +36,7 @@ export function* getUserData(userAuth) {
       method: "get",
     });
     console.log("get user data2");
+    console.log(res);
     console.log(res.data.data);
     yield put(signInSuccess(res.data.data));
   } catch (error) {
