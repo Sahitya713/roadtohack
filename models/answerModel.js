@@ -13,6 +13,11 @@ const answerSchema = mongoose.Schema({
     ref: "Question",
     required: [true, "An answer must belong to a question"],
   },
+  score: {
+    type: Number,
+    required: [true, "A answer needs score"],
+    default: 0,
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
@@ -20,9 +25,15 @@ const answerSchema = mongoose.Schema({
   },
   isAnswerCorrect: {
     type: Boolean,
-    default: false,
+    default: true,
   },
-  userAnswer: String,
+  userAnswers: [
+    {
+      userAnswer: String,
+      correct: Boolean,
+    },
+    { _id: false },
+  ],
   userCode: String,
   userOptions: [
     {
@@ -33,6 +44,10 @@ const answerSchema = mongoose.Schema({
     },
     { _id: false },
   ],
+  comment: {
+    type: String,
+    default: "",
+  },
 });
 
 answerSchema.index(

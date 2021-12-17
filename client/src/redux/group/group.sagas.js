@@ -23,7 +23,7 @@ export function* fetchGroupAsync(action) {
     const group = res.data.data;
     yield put(fetchGroupSuccess(group));
   } catch (error) {
-    yield put(fetchGroupFailure(error.message));
+    yield put(fetchGroupFailure(error.response.data.message));
   }
 }
 export function* updateGroupAsync(action) {
@@ -48,7 +48,7 @@ export function* updateGroupAsync(action) {
 
     yield put(updateGroupSuccess(grp));
   } catch (error) {
-    yield put(updateGroupFailure(error.message));
+    yield put(updateGroupFailure(error.response.data.message));
   }
 }
 

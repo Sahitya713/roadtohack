@@ -13,4 +13,11 @@ export const UserActionTypes = {
   CHECK_USER_SESSION_END: "CHECK_USER_SESSION_END",
 };
 
+export const RegStatusTypes = {
+  SIGN_IN: "SIGN_IN",
+  SIGN_UP: "SIGN_UP",
+  SIGN_OUT: "SIGN_OUT",
+  NULL: "NULL",
+};
+
 export default UserActionTypes;

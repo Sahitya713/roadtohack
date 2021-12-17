@@ -2,6 +2,8 @@ import React from "react";
 
 import { selectCurrChallenge } from "../../redux/challenge/challenge.selectors";
 import { selectQuestions } from "../../redux/question/question.selectors";
+import { selectCurrentUserName } from "../../redux/user/user.selectors";
+import { selectAnswerStatuses } from "../../redux/answer/answer.selectors";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 // import { Link } from "react-router-dom";
@@ -37,7 +39,8 @@ class Homepage extends React.Component {
     // });
   };
   render() {
-    const { challenge, match, questions } = this.props;
+    const { challenge, questions, currUserName, answerStatuses } = this.props;
+
     const { viewport, selectedQnId } = this.state;
     const additionalMapCond = {
       maxZoom: 18,
@@ -65,7 +68,9 @@ class Homepage extends React.Component {
           <div className="homepage-overlay">
             <h1 className="homepage-title">{challenge.title}</h1>
             <div className="homepage-desc">
-              <p>{challenge.description}</p>
+              <p>
+                Hey there Hacker {currUserName}! {challenge.description}
+              </p>
               <p>
                 Navigate through the map and solve all the problems as a team.
                 See the problem details by clicking on the marker.
@@ -78,40 +83,48 @@ class Homepage extends React.Component {
             </div>
           </div>
 
-          {questions.map(({ title, slug, location, _id, points }, idx) => (
-            <div key={idx}>
-              {/* <Link to={`${match.url}/question/${slug}`}>{title}</Link> */}
-              <Marker
-                latitude={location.lat}
-                longitude={location.long}
-                offsetLeft={-25}
-                offsetTop={-40}
-              >
-                <i
-                  onClick={() => this.handleMarkerClick(_id)}
-                  className="material-icons good"
-                ></i>
-              </Marker>
-              {_id === selectedQnId && (
-                <Popup
+          {questions.map(
+            ({ title, slug, location, _id, points, questionType }, idx) => (
+              <div key={idx}>
+                {/* <Link to={`${match.url}/question/${slug}`}>{title}</Link> */}
+                <Marker
                   latitude={location.lat}
                   longitude={location.long}
-                  closeButton={true}
-                  closeOnClick={false}
-                  onClose={() => this.setState({ selectedQnId: null })}
-                  anchor="bottom"
+                  offsetLeft={-25}
                   offsetTop={-40}
                 >
-                  <MarkerCard
-                    questionTitle={title}
-                    link={`${match.url}/question/${slug}`}
-                    locName={location.name}
-                    points={points}
-                  />
-                </Popup>
-              )}
-            </div>
-          ))}
+                  <i
+                    onClick={() => this.handleMarkerClick(_id)}
+                    className={
+                      answerStatuses[_id]
+                        ? `material-icons ${answerStatuses[_id]}`
+                        : "material-icons maybe"
+                    }
+                  ></i>
+                </Marker>
+                {_id === selectedQnId && (
+                  <Popup
+                    latitude={location.lat}
+                    longitude={location.long}
+                    closeButton={true}
+                    closeOnClick={false}
+                    onClose={() => this.setState({ selectedQnId: null })}
+                    anchor="bottom"
+                    offsetTop={-40}
+                    className="marker-popup-overlay"
+                  >
+                    <MarkerCard
+                      questionTitle={title}
+                      link={`/question/${slug}`}
+                      locName={location.name}
+                      points={points}
+                      questionType={questionType}
+                    />
+                  </Popup>
+                )}
+              </div>
+            )
+          )}
         </ReactMapGL>
       </div>
     );
@@ -121,5 +134,7 @@ class Homepage extends React.Component {
 const mapStateToProps = createStructuredSelector({
   challenge: selectCurrChallenge,
   questions: selectQuestions,
+  currUserName: selectCurrentUserName,
+  answerStatuses: selectAnswerStatuses,
 });
 export default connect(mapStateToProps)(Homepage);

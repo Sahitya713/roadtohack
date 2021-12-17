@@ -32,7 +32,7 @@ export function* getUserData(userAuth) {
   try {
     console.log(uid);
     const res = yield axios({
-      url: `./api/v1/user/${uid}`,
+      url: `/api/v1/user/${uid}`,
       method: "get",
     });
     console.log("get user data3");
@@ -40,7 +40,7 @@ export function* getUserData(userAuth) {
     console.log(res.data.data);
     yield put(signInSuccess(res.data.data));
   } catch (error) {
-    yield put(signInFailure(error));
+    yield put(signInFailure(error.response.data.message));
   }
 }
 
@@ -49,7 +49,7 @@ export function* signInWithEmail({ payload: { email, password } }) {
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
     yield getUserData(user);
   } catch (error) {
-    yield put(signInFailure(error));
+    yield put(signInFailure(error.message));
   }
 }
 export function* isUserAuthenticated() {
@@ -67,28 +67,51 @@ export function* signOut() {
     yield auth.signOut();
     yield put(signOutSuccess());
   } catch (error) {
-    yield put(signOutFailure(error));
+    yield put(signOutFailure(error.message));
   }
 }
+
+const firebaseSignUp = async (email, password) => {
+  try {
+    const { user } = await auth.createUserWithEmailAndPassword(email, password);
+    return [0, user];
+  } catch (error) {
+    return [1, error.message];
+  }
+};
+
 function* signUp({
   payload: { email, password, displayName, group, hackCode },
 }) {
-  try {
-    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
-    const res = yield axios({
-      url: "/api/v1/user",
-      method: "POST",
-      data: {
-        uid: user.uid,
-        displayName,
-        email,
-        hackCode,
-        group,
-      },
-    });
-    yield put(signInSuccess(res.data.data));
-  } catch (error) {
-    yield put(signUpFailure(error.message));
+  const [code, user] = yield firebaseSignUp(email, password);
+  if (code === 1) {
+    yield put(signUpFailure(user));
+  } else {
+    // try {
+    //   const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+    // } catch (error) {
+    //   yield put(signUpFailure(error.message));
+    //   return;
+    // }
+    try {
+      const res = yield axios({
+        url: "/api/v1/user",
+        method: "POST",
+        data: {
+          uid: user.uid,
+          displayName,
+          email,
+          hackCode,
+          group,
+        },
+      });
+      yield put(signInSuccess(res.data.data));
+    } catch (error) {
+      // TODO delete user from firebase if exists
+      const user = auth.currentUser;
+      user.delete();
+      yield put(signUpFailure(error.response.data.message));
+    }
   }
 }
 

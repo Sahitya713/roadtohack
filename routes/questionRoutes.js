@@ -2,9 +2,23 @@ const express = require("express");
 const questionController = require("../controllers/questionController");
 const router = express.Router();
 
+// - create qn
+// - edit qn
+// - delet qn
+// - get all qns (id, name)
+// - get qn by id
+
 router
   .route("/")
-  .post(questionController.manageInputFile, questionController.createQuestion);
+  .post(
+    questionController.manageQuestionFiles,
+    questionController.createQuestion
+  );
+
+router
+  .route("/:id")
+  .patch(questionController.updateQuestion)
+  .delete(questionController.deleteQuestion);
 router
   .route("/get-questions/:hackCode")
   .get(questionController.getAllQuestionsByCode);

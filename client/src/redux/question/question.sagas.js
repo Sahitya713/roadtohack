@@ -21,7 +21,7 @@ export function* fetchQuestionsAsync(action) {
     const questions = res.data.data;
     yield put(fetchQuestionsSuccess(questions));
   } catch (error) {
-    yield put(fetchQuestionsFailure(error.message));
+    yield put(fetchQuestionsFailure(error.response.data.message));
   }
 }
 
@@ -38,7 +38,7 @@ export function* downloadInputAsync(action) {
     document.body.appendChild(link);
     link.click();
   } catch (error) {
-    yield put(downloadInputFailure(error));
+    yield put(downloadInputFailure(error.response.data.message));
   }
 }
 export function* onSignInSuccess() {

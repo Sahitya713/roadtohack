@@ -1,22 +1,26 @@
 import React from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
+import ErrMessage from "../errMessage/errMessage.component";
 
 import "./signup.styles.css";
 import { signUpStart } from "../../redux/user/user.actions";
+import { selectSignUpError } from "../../redux/user/user.selectors";
 
 class SignUp extends React.Component {
   constructor() {
     super();
     this.state = {
-      hackCode: "",
+      hackCode: "1234567",
       group: "",
       displayName: "",
       email: "",
       password: "",
       confirmPassword: "",
+      error: "",
     };
   }
 
@@ -27,9 +31,13 @@ class SignUp extends React.Component {
       this.state;
 
     if (password !== confirmPassword) {
-      alert("passwords don't match");
+      this.setState({ error: "Passwords don't match!" });
+      // alert("passwords don't match");
       return;
     }
+    this.setState({ error: "" });
+
+    console.log(hackCode);
 
     signUpStart({ displayName, group, hackCode, email, password });
   };
@@ -41,21 +49,32 @@ class SignUp extends React.Component {
   };
 
   render() {
-    const { displayName, hackCode, group, email, password, confirmPassword } =
+    const { displayName, group, email, password, confirmPassword, error } =
       this.state;
+    const { authError } = this.props;
+
     return (
-      <div className="sign-up">
-        <h2 className="title">I do not have a account</h2>
-        <span>Sign up with your email and password</span>
+      <div className="sign-in">
+        {/* <h2 className="title">I do not have a account</h2> */}
+        <h3>Sign up with your email and password</h3>
+        {error ? (
+          <ErrMessage message={error} />
+        ) : authError ? (
+          <ErrMessage message={authError} />
+        ) : (
+          <div />
+          // <br></br>
+        )}
+
         <form className="sign-up-form" onSubmit={this.handleSubmit}>
-          <FormInput
+          {/* <FormInput
             type="text"
             name="hackCode"
             value={hackCode}
             onChange={this.handleChange}
             label="Challenge Code"
             required
-          />
+          /> */}
           <FormInput
             type="text"
             name="group"
@@ -96,6 +115,7 @@ class SignUp extends React.Component {
             label="Confirm Password"
             required
           />
+
           <CustomButton type="submit">SIGN UP</CustomButton>
         </form>
       </div>
@@ -106,4 +126,9 @@ class SignUp extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   signUpStart: (userCredentials) => dispatch(signUpStart(userCredentials)),
 });
-export default connect(null, mapDispatchToProps)(SignUp);
+
+const mapStateToProps = createStructuredSelector({
+  authError: selectSignUpError,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

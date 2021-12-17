@@ -13,7 +13,8 @@ class McqAndMsqOptions extends React.Component {
 
     this.state = {
       selectedOptions: [],
-      errMessage: " ",
+      errMessage: "",
+      comment: "",
     };
   }
   componentDidMount() {
@@ -24,7 +25,7 @@ class McqAndMsqOptions extends React.Component {
   }
   handleSubmit = async (event) => {
     event.preventDefault();
-    const { selectedOptions } = this.state;
+    const { selectedOptions, comment } = this.state;
 
     if (selectedOptions.length === 0) {
       this.setState({
@@ -38,6 +39,7 @@ class McqAndMsqOptions extends React.Component {
       question: question._id,
       user: currUser._id,
       selectedOptions,
+      comment,
     });
 
     // this.setState({})
@@ -61,8 +63,13 @@ class McqAndMsqOptions extends React.Component {
     }
   };
 
+  handleComment = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
   render() {
-    const { selectedOptions, errMessage } = this.state;
+    const { selectedOptions, errMessage, comment } = this.state;
     const { answer, question } = this.props;
     const { options, questionType } = question;
     console.log(answer);
@@ -82,6 +89,16 @@ class McqAndMsqOptions extends React.Component {
               {type === "image" ? <img src={option} alt="item" /> : option}
             </label>
           ))}
+
+          <label htmlFor="comment">Additional Comments: </label>
+          <textarea
+            name="comment"
+            value={comment}
+            onChange={this.handleComment}
+            rows="5"
+            cols="50"
+            id="comment"
+          />
           <ErrMessage message={errMessage} />
           <button disabled={answer ? true : false} type="submit">
             Submit

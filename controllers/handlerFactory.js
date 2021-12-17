@@ -4,6 +4,7 @@ const APIFeatures = require("../utils/apiFeatures");
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
+    console.log(req.params);
     const doc = await Model.findByIdAndDelete(req.params.id);
     if (!doc) {
       return next(
@@ -85,14 +86,14 @@ exports.getAllByCode = (Model) =>
     //   if (popOptions) query = query.populate(popOptions);
     const doc = await query;
 
-    if (!doc || doc.length == 0) {
-      return next(
-        new AppError(
-          `no documents found with the challenge code ${req.params.hackCode}`,
-          404
-        )
-      );
-    }
+    // if (!doc || doc.length == 0) {
+    //   return next(
+    //     new AppError(
+    //       `no documents found with the challenge code ${req.params.hackCode}`,
+    //       404
+    //     )
+    //   );
+    // }
     res.status(200).json({
       status: "success",
       results: doc.length,

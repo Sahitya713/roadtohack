@@ -12,5 +12,6 @@ export const questionTypes = {
   MCQ: "mcq",
   MSQ: "msq",
   INPUT: "input",
+  CODE: "code",
 };
 export default questionActionTypes;

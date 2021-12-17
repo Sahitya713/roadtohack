@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import "./header.styles.css";
 import { signOutStart } from "../../redux/user/user.actions";
 import { toggleEdit } from "../../redux/group/group.actions";
-import CustomButton from "../custom-button/custom-button.component";
+import CustomButton2 from "../custom-button2/custom-button2.component";
 
 const Header = ({ signOutStart, toggleEdit, match }) => {
   const location = useLocation();
@@ -22,29 +22,35 @@ const Header = ({ signOutStart, toggleEdit, match }) => {
         </Link>
         <Link
           className={route === "group" ? "option-selected" : "option"}
-          to={`${match.url}/group`}
+          to={`/group`}
         >
           Group
         </Link>
         <Link
           className={route === "leaderboard" ? "option-selected" : "option"}
-          to={`${match.url}/leaderboard`}
+          to={`/leaderboard`}
         >
           Leaderboard
+        </Link>
+        <Link
+          className={route === "faq" ? "option-selected" : "option"}
+          to={`/faq`}
+        >
+          FAQ
         </Link>
       </div>
       <div className="buttons">
         {route === "group" ? (
-          <CustomButton
+          <CustomButton2
             style={{ backgroundColor: "rgb(40, 175, 40)" }}
             onClick={toggleEdit}
           >
             Edit
-          </CustomButton>
+          </CustomButton2>
         ) : (
           <div></div>
         )}
-        <CustomButton onClick={signOutStart}>Sign Out</CustomButton>
+        <CustomButton2 onClick={signOutStart}>Sign Out</CustomButton2>
       </div>
     </div>
   );

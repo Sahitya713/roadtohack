@@ -13,7 +13,7 @@ import UserActionTypes from "../user/user.types";
 export function* fetchChallengeAsync(action) {
   try {
     const res = yield axios({
-      url: `/api/v1/challenge/${action.payload.hackCode}`,
+      url: "/api/v1/challenge/1234567",
       method: "get",
     });
     const challenge = res.data.data[0];
@@ -21,7 +21,7 @@ export function* fetchChallengeAsync(action) {
     yield put(fetchChallengeSuccess(challenge));
     yield put(updateStatus());
   } catch (error) {
-    yield put(fetchChallengeFailure(error.message));
+    yield put(fetchChallengeFailure(error.response.data.message));
   }
 }
 
@@ -33,7 +33,7 @@ export function* fetchChallengeStart() {
 }
 
 export function* onSignInSuccess() {
-  yield takeLatest(UserActionTypes.SIGN_IN_SUCCESS, fetchChallengeAsync);
+  yield takeLatest(UserActionTypes.CHECK_USER_SESSION, fetchChallengeAsync);
 }
 
 export function* challengeSagas() {

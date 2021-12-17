@@ -44,12 +44,39 @@
 .material-icons::before {
   filter: drop-shadow(4px 4px 4px #000000);
   cursor: pointer;
-  font-size: 50px;
+  font-size: 60px;
 }
 .material-icons.good::before {
   content: "gpp_good";
   color: #30ff45;
 }
+
+.material-icons.maybe::before {
+  content: "gpp_maybe";
+  color: orange;
+}
+
+.material-icons.partial::before {
+  content: "gpp_good";
+  color: orange;
+}
+
+.material-icons.bad::before {
+  content: "gpp_bad";
+  color: red;
+}
 .material-icons:hover::before {
-  font-size: 55px;
+  font-size: 65px;
+}
+.mapboxgl-popup-content {
+  font: 400 15px/22px "Source Sans Pro", "Helvetica Neue", sans-serif;
+  padding: 0px;
+  width: 250px;
+  /* background-color: gray; */
+  border-radius: 10%;
+}
+
+.mapboxgl-popup-close-button {
+  font-size: 20px;
+  margin-right: 3px;
 }

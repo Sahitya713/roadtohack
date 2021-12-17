@@ -17,6 +17,15 @@ const groupSchema = mongoose.Schema({
     minLength: [7, "challenge code can only be 7 characters"],
     maxLength: [7, "challenge code can only be 7 characters"],
   },
+  groupCode: {
+    type: String,
+    required: [true, "A group must have a group code"],
+    trim: true,
+    minLength: [5, "challenge code can only be 5 characters"],
+    maxLength: [5, "challenge code can only be 5 characters"],
+    unique: true,
+  },
+  members: [String],
 });
 const Group = mongoose.model("Group", groupSchema);
 module.exports = Group;

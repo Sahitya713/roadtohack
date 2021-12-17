@@ -1,13 +1,22 @@
 .sign-in {
-  width: 380px;
+  width: 30%;
   display: flex;
   flex-direction: column;
+  border: 10px solid lightgrey;
+  border-radius: 5%;
+  padding: 30px 50px;
+  align-items: stretch;
+  margin-bottom: 30px;
+
+  @media screen and (max-width: 800px) {
+    width: 80%;
+  }
 }
 .title {
   margin: 10px 0;
 }
 
-.buttons {
+/* .buttons-signin {
   display: flex;
   justify-content: space-between;
-}
+} */

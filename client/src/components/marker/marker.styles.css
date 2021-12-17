@@ -1,0 +1,26 @@
+.marker-container {
+  display: flex;
+  flex-direction: column;
+  background: lightgrey;
+  padding: 20px 10px;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.marker-title {
+  font-size: 20px;
+}
+.marker-locname {
+  top: -5px;
+  margin-left: 5px;
+  position: relative;
+}
+
+.marker-points {
+  color: green;
+  font-weight: bold;
+}

@@ -1,10 +1,38 @@
 .grp-edit-overlay {
-  width: 75%;
+  width: 60%;
   height: 75%;
-  margin-top: 10px;
+  margin-top: 20px;
   background: white;
   z-index: 1;
   position: fixed;
   box-shadow: 4px 4px 20px 8px rgba(0, 0, 0, 0.25);
   /* backdrop-filter: blur(10px); */
+}
+
+.grp-image-input {
+  display: none;
+}
+
+.image-upload {
+  border: 3px solid #ccc;
+  display: inline-block;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+.grp-name-wrap {
+  width: 50%;
+  margin: auto;
+}
+
+.close-group {
+  position: relative;
+  margin-left: 97%;
+  margin-top: 0.5%;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.grp-edit-form {
+  margin-top: 30px;
 }

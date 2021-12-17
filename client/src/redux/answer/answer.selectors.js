@@ -29,3 +29,29 @@ export const selectIsGroupScoresFetching = createSelector(
 
 //   }
 // )
+
+export const selectAnswerStatuses = createSelector([selectAnswer], (answer) => {
+  const res = {};
+  answer.answers.forEach((ans) => {
+    let status = "maybe";
+    const { question, isAnswerCorrect, score } = ans;
+    status =
+      question.questionType === "code"
+        ? "partial"
+        : isAnswerCorrect
+        ? "good"
+        : score > 0
+        ? "partial"
+        : "bad";
+    res[question._id] = status;
+  });
+  return res;
+});
+
+// qn.questionType === "code"
+//             ? { backgroundColor: "orange" }
+//             : ans.isAnswerCorrect
+//             ? { backgroundColor: "green" }
+//             : ans.score > 0
+//             ? { backgroundColor: "orange" }
+//             : { backgroundColor: "red" }

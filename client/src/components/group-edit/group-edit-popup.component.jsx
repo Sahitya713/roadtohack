@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
+import { Close } from "@material-ui/icons";
+
 import "./group-edit.styles.css";
 import { updateGroupStart, toggleEdit } from "../../redux/group/group.actions";
 import { selectCurrGroup } from "../../redux/group/group.selectors";
@@ -65,7 +67,9 @@ class GroupEditPopUp extends React.Component {
 
     return (
       <div className="grp-edit-overlay">
-        <form onSubmit={this.handleSubmit}>
+        <Close onClick={toggleEdit} className="close-group" />
+        <h2 className="title">Edit your Group Details</h2>
+        <form className="grp-edit-form" onSubmit={this.handleSubmit}>
           <img className="grp-img" src={displayImage} alt="grp-img" />
           <br />
           <label className="image-upload">
@@ -73,6 +77,7 @@ class GroupEditPopUp extends React.Component {
               type="file"
               onChange={this.selectImage}
               accept=".jpg, .jpeg .png .pdf"
+              className="grp-image-input"
             />
             upload photo
           </label>
@@ -92,7 +97,7 @@ class GroupEditPopUp extends React.Component {
           >
             save
           </CustomButton>
-          <CustomButton onClick={toggleEdit}>close</CustomButton>
+          {/* <CustomButton onClick={toggleEdit}>close</CustomButton> */}
         </form>
       </div>
     );

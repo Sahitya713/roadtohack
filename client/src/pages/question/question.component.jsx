@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { questionTypes } from "../../redux/question/question.types";
 import InputOptions from "../../components/inputOptions/inputOptions.component";
 import McqAndMsqOptions from "../../components/mcqandmsqOptions/mcqandmsqOptions.component";
+import CodeOptions from "../../components/codeOptions/codeOptions.component";
 
 const QuestionPage = ({ currQuestion, currAnswer }) => {
   const { title, question, points, image, questionType } = currQuestion;
@@ -15,10 +16,18 @@ const QuestionPage = ({ currQuestion, currAnswer }) => {
       <h1>{title}</h1>
       {/* {currAnswer ? <div>{currAnswer.userOptions[0].option}</div> : <div />} */}
       <div>{points} points</div>
+      {currAnswer && (
+        <div>
+          you have earned a score of {currAnswer.score} points for this
+          question.
+        </div>
+      )}
       <h3>{question}</h3>
       {image ? <img src={image} alt="suppImage" /> : <div />}
       {questionType === questionTypes.INPUT ? (
         <InputOptions question={currQuestion} answer={currAnswer} />
+      ) : questionType === questionTypes.CODE ? (
+        <CodeOptions question={currQuestion} answer={currAnswer} />
       ) : (
         <McqAndMsqOptions question={currQuestion} answer={currAnswer} />
       )}

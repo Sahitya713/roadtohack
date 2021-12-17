@@ -10,6 +10,7 @@ router.route("/get-groups/:hackCode").get(groupController.getAllGroupsByCode);
 router
   .route("/:id")
   .get(groupController.getGroup)
-  .patch(groupController.manageGrpImage, groupController.updateGroup);
+  .patch(groupController.manageGrpImage, groupController.updateGroup)
+  .delete(groupController.deleteGroup);
 // router.route("/:id").get(userController.getChallengeByCode);
 module.exports = router;

@@ -7,6 +7,7 @@ import { selectCurrentUser } from "../../redux/user/user.selectors";
 import { createAnswerStart } from "../../redux/answer/answer.actions";
 import { createStructuredSelector } from "reselect";
 import { downloadInputStart } from "../../redux/question/question.actions";
+
 // import { selectCurrQuestion } from "../../redux/question/question.selectors";
 
 class InputOptions extends React.Component {
@@ -14,49 +15,93 @@ class InputOptions extends React.Component {
     super(props);
 
     this.state = {
-      userAnswer: "",
+      userAnswers: ["", "", ""],
       userCode: null,
       errMessage: "",
       correct: null,
+      changed: false,
+      comment: "",
     };
   }
 
-  // componentDidMount() {
-  //   this.setState({ userAnswer: this.props.answer.userAnswer });
-  // }
+  componentDidMount() {
+    const { question, answer } = this.props;
+    if (answer) {
+      const answers = answer.userAnswers.map((el) => el.userAnswer);
+      this.setState({
+        userAnswers: answers,
+        comment: answer.comment,
+        userCode: answer.userCode,
+      });
+    } else {
+      this.setState({ userAnswers: question.inputs.map((e) => "") });
+    }
+  }
 
   handleSubmit = (e) => {
     const { question, currUser, createAnswer } = this.props;
     e.preventDefault();
-    const { userAnswer, userCode } = this.state;
-    if (userAnswer === null || userCode == null) {
+    var { userAnswers, userCode, changed, comment } = this.state;
+    console.log(userAnswers);
+    userAnswers = userAnswers.filter((el) => el !== "");
+
+    if (
+      userAnswers === null ||
+      userCode == null ||
+      userAnswers.length !== question.correctAnswers.length
+    ) {
       this.setState({
-        errMessage: "Please type in your final answer and your working code.",
+        errMessage:
+          "Please type in your answers for all the questions and upload your working code before submitting.",
       });
       return;
     }
 
-    createAnswer({
-      question: question._id,
-      user: currUser._id,
-      userAnswer,
-      userCode,
-    });
+    if (changed) {
+      createAnswer({
+        question: question._id,
+        user: currUser._id,
+        userAnswers,
+        userCode,
+        comment,
+      });
+    } else {
+      createAnswer({
+        question: question._id,
+        user: currUser._id,
+        userAnswers,
+        comment,
+      });
+    }
+  };
+
+  handleUserAnswers = (e) => {
+    const { value, name } = e.target;
+    this.setState(({ userAnswers }) => ({
+      userAnswers: [
+        ...userAnswers.slice(0, name),
+        value,
+        ...userAnswers.slice(name + 1),
+      ],
+    }));
+    // this.setState({ [name]: value });
   };
 
   handleChange = (e) => {
-    const { value, name } = e.target;
-
+    const { name, value } = e.target;
     this.setState({ [name]: value });
   };
   handleFileChange = (event) => {
     // Update the state
-    this.setState({ userCode: event.target.files[0] });
+    this.setState({ userCode: event.target.files[0], changed: true });
   };
 
   render() {
-    const { downloadInputStart } = this.props;
-    const { sampleInput, sampleOutput, input, _id } = this.props.question;
+    console.log(this.props);
+    // const { downloadInputStart } = this.props;
+    const { sampleInput, sampleOutput, inputs } = this.props.question;
+    const { userAnswers, errMessage, comment } = this.state;
+
     return (
       <div>
         {sampleInput.map((input, idx) => (
@@ -67,7 +112,7 @@ class InputOptions extends React.Component {
             <div>{sampleOutput[idx]}</div>
           </div>
         ))}
-        <h2>Input</h2>
+        {/* <h2>Input</h2>
         <span>
           Download the input file below and submit your solution to the given
           input to this page.
@@ -77,34 +122,60 @@ class InputOptions extends React.Component {
         {/* <Link to={input} target="_blank" download>
           Download
         </Link> */}
-        <div onClick={() => downloadInputStart(_id)}>Download</div>
-
+        {/* <div onClick={() => downloadInputStart(_id)}>Download</div> */}
         {/* <a href={`/api/v1/question/download/${input}`}>Download</a> */}
         <form onSubmit={this.handleSubmit}>
           <h2>Solution</h2>
-          <label>
-            Your Output:
-            <input
-              type="text"
-              name="userAnswer"
-              value={this.state.userAnswer}
-              onChange={this.handleChange}
-            />
-          </label>
+          {inputs.map((inp, idx) => (
+            <div key={idx}>
+              <div>Input: {inp}</div>
+              <label>
+                Your Output:
+                <input
+                  type="text"
+                  name={idx}
+                  value={userAnswers[idx]}
+                  onChange={this.handleUserAnswers}
+                />
+              </label>
+              {this.props.answer && (
+                <div>
+                  {this.props.answer.userAnswers[idx].correct
+                    ? "Correct"
+                    : "Incorrect"}
+                </div>
+              )}
+            </div>
+          ))}
+
           <div>
             Please also upload a python file containing the code that helped you
             arrive at your answer.
           </div>
-          <label>
+          <div>
             Code File:
-            <input
-              type="file"
-              onChange={this.handleFileChange}
-              // accept=".py .txt"
-            />
-          </label>
+            <label>
+              Upload
+              <input
+                type="file"
+                onChange={this.handleFileChange}
+                // accept=".py .txt"
+              />
+            </label>
+          </div>
+          <br />
 
-          <ErrMessage message={this.state.errMessage} />
+          <label htmlFor="comment">Additional Comments: </label>
+          <textarea
+            name="comment"
+            value={comment}
+            onChange={this.handleChange}
+            rows="5"
+            cols="50"
+            id="comment"
+          />
+
+          <ErrMessage message={errMessage} />
           <CustomButton type="submit"> Submit</CustomButton>
         </form>
       </div>

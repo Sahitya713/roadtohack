@@ -29,28 +29,41 @@ class App extends React.Component {
 
   render() {
     const { currentUser, challengeStatus, isLoading } = this.props;
-    console.log(currentUser);
     return isLoading ? (
       <Spinner />
     ) : (
       <div className="App">
         <Switch>
           <Route
-            path="/:hackCode"
+            exact
+            path="/"
             render={(props) =>
-              currentUser ? (
-                challengeStatus.status === statuses.O ? (
+              challengeStatus.status === statuses.O ? (
+                currentUser ? (
                   <MainPageContainer {...props} />
                 ) : (
-                  <Message message={challengeStatus.message} />
+                  <SignInPage />
                 )
               ) : (
-                <SignInPage />
+                <Message message={challengeStatus.message} />
               )
             }
           />
           <Route
-            exact
+            path="/"
+            render={(props) =>
+              challengeStatus.status === statuses.O ? (
+                currentUser ? (
+                  <MainPageContainer {...props} />
+                ) : (
+                  <Redirect to="/" />
+                )
+              ) : (
+                <Message message={challengeStatus.message} />
+              )
+            }
+          />
+          {/* <Route
             path="/"
             render={() => {
               return currentUser ? (
@@ -59,9 +72,9 @@ class App extends React.Component {
                 <SignInPage />
               );
             }}
-          />
+          /> */}
 
-          {/* <Route exact path="/signin" component={SignInPage} /> */}
+          <Route exact path="/signin" component={SignInPage} />
         </Switch>
       </div>
     );

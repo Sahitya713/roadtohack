@@ -5,8 +5,11 @@ import CustomButton from "../custom-button/custom-button.component";
 
 import "./signin.styles.css";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 import { emailSignInStart } from "../../redux/user/user.actions";
+import { selectSignInError } from "../../redux/user/user.selectors";
 
+import ErrMessage from "../errMessage/errMessage.component";
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +17,6 @@ class SignIn extends React.Component {
     this.state = {
       email: "",
       password: "",
-      hackCode: "",
     };
   }
 
@@ -35,18 +37,23 @@ class SignIn extends React.Component {
   render() {
     return (
       <div className="sign-in">
-        <h2>I already have an account</h2>
-        <span>Sign in with your email and password</span>
+        {/* <h2>I already have an account</h2> */}
+        <h3>Login with your email and password</h3>
+        {this.props.authError ? (
+          <ErrMessage message={this.props.authError} />
+        ) : (
+          <div />
+        )}
 
         <form onSubmit={this.handleSubmit}>
-          <FormInput
+          {/* <FormInput
             name="hackCode"
             type="hackCode"
             value={this.state.hackCode}
             handleChange={this.handleChange}
             label="Challenge Code"
             required
-          />
+          /> */}
           <FormInput
             name="email"
             type="email"
@@ -64,8 +71,8 @@ class SignIn extends React.Component {
             required
           />
 
-          <div className="buttons">
-            <CustomButton type="submit"> Sign in </CustomButton>
+          <div className="buttons-signin">
+            <CustomButton type="submit"> SIGN IN </CustomButton>
             {/* <CustomButton
               type="button"
               onClick={signInWithGoogle}
@@ -85,5 +92,8 @@ const mapDispatchToProps = (dispatch) => ({
   emailSignInStart: (email, password) =>
     dispatch(emailSignInStart({ email, password })),
 });
+const mapStateToProps = createStructuredSelector({
+  authError: selectSignInError,
+});
 
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

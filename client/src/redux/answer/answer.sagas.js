@@ -24,7 +24,7 @@ export function* fetchAnswersAsync(action) {
     const answers = res.data.data;
     yield put(fetchAnswersSuccess(answers));
   } catch (error) {
-    yield put(fetchAnswersFailure(error.message));
+    yield put(fetchAnswersFailure(error.response.data.message));
   }
 }
 
@@ -35,10 +35,13 @@ export function* createAnswerAsync(action) {
     const { payload } = action;
     formdata.append("user", payload.user);
     formdata.append("question", payload.question);
-
-    if (payload.userAnswer) {
-      formdata.append("userAnswer", payload.userAnswer);
+    if (payload.comment) {
+      formdata.append("comment", payload.comment);
     }
+
+    // if (payload.userAnswer) {
+    //   formdata.append("userAnswer", payload.userAnswer);
+    // }
     if (payload.userCode) {
       formdata.append("userCode", payload.userCode);
     }
@@ -47,6 +50,9 @@ export function* createAnswerAsync(action) {
         "selectedOptions",
         JSON.stringify(payload.selectedOptions)
       );
+    }
+    if (payload.userAnswers) {
+      formdata.append("userAnswers", JSON.stringify(payload.userAnswers));
     }
 
     console.log(formdata);
@@ -63,7 +69,7 @@ export function* createAnswerAsync(action) {
     console.log(answer);
     yield put(createAnswerSuccess(answer));
   } catch (error) {
-    yield put(createAnswerFailure(error.message));
+    yield put(createAnswerFailure(error.response.data.message));
   }
 }
 
@@ -77,7 +83,7 @@ export function* fetchGroupScoresAsync(action) {
     const groupScores = res.data.data;
     yield put(fetchGroupAnswersSuccess(groupScores));
   } catch (error) {
-    yield put(fetchGroupAnswersFailure(error.message));
+    yield put(fetchGroupAnswersFailure(error.response.data.message));
   }
 }
 export function* onFetchAnswersStart() {

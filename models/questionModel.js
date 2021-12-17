@@ -20,8 +20,7 @@ const questionSchema = mongoose.Schema({
     trim: true,
   },
   location: {
-    name: String,
-    id: Number,
+    name: { type: String, unique: true },
     long: Number,
     lat: Number,
   },
@@ -35,16 +34,34 @@ const questionSchema = mongoose.Schema({
     type: String,
     required: [true, "A question must have a questionType"],
     enum: {
-      values: ["input", "mcq", "msq"],
-      message: "Question Type is either input, mcq or msq",
+      values: ["input", "mcq", "msq", "code"],
+      message: "Question Type is either input, code, mcq or msq",
     },
   },
   sampleInput: [String],
   sampleOutput: [String],
-  correctAnswer: {
-    type: String,
-  },
   input: String,
+  inputs: {
+    type: [String],
+    validate: {
+      validator: function (val) {
+        if (this.questionType === "input") {
+          return val.length >= 1;
+        }
+        return true;
+      },
+      message: "An Input Question must have at least 1 input value",
+    },
+  },
+  correctAnswers: {
+    type: [String],
+    validate: {
+      validator: function (val) {
+        return val.length === this.inputs.length;
+      },
+      message: "You need to provide the correct answers for each of the inputs",
+    },
+  },
   options: [
     {
       option: String,

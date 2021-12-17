@@ -2,7 +2,7 @@ const AWS = require("aws-sdk");
 const { v4: uuidv4 } = require("uuid");
 const dotenv = require("dotenv");
 
-dotenv.config({ path: "./config.env" });
+dotenv.config({ path: "./.env" });
 
 // SET UP AWS S3 middleware
 
@@ -15,7 +15,7 @@ exports.uploadFile = (file, foldername, fileName) => {
   // const myFile = file.originalname.split(".");
   // const fileType = myFile[myFile.length - 1];
 
-  file_name = fileName ? fileName : uuidv4();
+  const file_name = fileName ? fileName : uuidv4();
 
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
