@@ -57,7 +57,8 @@ class Homepage extends React.Component {
         <ReactMapGL
           {...viewport}
           {...additionalMapCond}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
+          // mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
+          mapboxApiAccessToken="pk.eyJ1Ijoic2FoaXR5YTAwMiIsImEiOiJja3JxZG5idGYwbHlrMm5wZmN6cWVzMnh6In0.b5gsWfXOHgkk028Wsg7FtQ"
           onViewportChange={(nextViewport) =>
             this.setState({ viewport: nextViewport })
           }
