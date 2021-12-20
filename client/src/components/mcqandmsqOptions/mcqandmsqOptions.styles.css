@@ -1,0 +1,56 @@
+.mcq-details-container {
+  width: 100%;
+}
+
+.mcq-remark {
+  color: red;
+  text-align: left;
+  margin: 20px 0px;
+}
+
+.option-img {
+  height: 250px;
+}
+.option-text {
+  width: 80%;
+  overflow-y: wrap;
+  text-align: left;
+}
+.options-container {
+  display: grid;
+  width: 100%;
+
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  gap: 20px;
+  /* align-items: baseline-start; */
+  justify-items: start;
+}
+
+.option-overlay {
+  display: flex;
+}
+
+.option-checkbox {
+  accent-color: #2aa1c0;
+  width: 20px;
+  height: 20px;
+  border: 1px solid lightgray;
+  margin-right: 10px;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+input[type="checkbox"]:hover {
+  filter: brightness(90%);
+}
+input[type="checkbox"]:disabled:hover {
+  filter: brightness(100%);
+}
+
+.mcq-icons {
+  position: relative;
+  left: -32px;
+  top: 25px;
+}
+
+/* https://stackoverflow.com/questions/4148499/how-to-style-a-checkbox-using-css/69164710#69164710 */

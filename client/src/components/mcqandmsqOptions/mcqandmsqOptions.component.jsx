@@ -6,7 +6,11 @@ import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
 import { createAnswerStart } from "../../redux/answer/answer.actions";
 import { createStructuredSelector } from "reselect";
+import FormInputTextArea from "../form-input-textarea/form-input-textarea.component";
+import { Check, Close } from "@material-ui/icons";
 
+import "./mcqandmsqOptions.styles.css";
+import CustomButton from "../custom-button/custom-button.component";
 class McqAndMsqOptions extends React.Component {
   constructor(props) {
     super(props);
@@ -18,9 +22,11 @@ class McqAndMsqOptions extends React.Component {
     };
   }
   componentDidMount() {
-    const { answer } = this.props;
-    if (answer) {
-      this.setState({ selectedOptions: answer.userOptions });
+    if (this.props.answer) {
+      const { userOptions, comment } = this.props.answer;
+      const options_all = userOptions.filter((item) => item.userAnswer);
+      const options = options_all.map((item) => item.option);
+      this.setState({ selectedOptions: options, comment });
     }
   }
   handleSubmit = async (event) => {
@@ -41,6 +47,8 @@ class McqAndMsqOptions extends React.Component {
       selectedOptions,
       comment,
     });
+
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 
     // this.setState({})
   };
@@ -73,36 +81,74 @@ class McqAndMsqOptions extends React.Component {
     const { answer, question } = this.props;
     const { options, questionType } = question;
     console.log(answer);
+    console.log(selectedOptions);
     return (
-      <div>
+      <div className="mcq-details-container">
+        <div className="mcq-remark">
+          *** Please note that you can only submit your answers for multiple
+          choice questions once.
+        </div>
         <form onSubmit={this.handleSubmit}>
           {/* <h1>Current Value is: {selectedOptions}</h1> */}
-          {options.map(({ option, type }, idx) => (
-            <label key={idx}>
-              <input
-                type={questionType === questionTypes.MCQ ? "radio" : "checkbox"}
-                value={option}
-                checked={selectedOptions.includes(option)}
-                onChange={this.handleChange}
-              />
+          <div className="options-container">
+            {options.map(({ option, type }, idx) => (
+              <div key={idx} className="option-overlay">
+                <input
+                  type={
+                    questionType === questionTypes.MCQ ? "radio" : "checkbox"
+                  }
+                  value={option}
+                  checked={selectedOptions.includes(option)}
+                  onChange={this.handleChange}
+                  disabled={this.props.answer ? true : false}
+                  // className={
+                  //   questionType === questionTypes.MCQ
+                  //     ? "option-radio"
+                  //     : "option-checkbox"
+                  // }
+                  className="option-checkbox"
+                />
+                {/* {answer.userOptions[idx].actual !==
+                  answer.userOptions[idx].userAnswer && (
+                  <Close style={{ color: "red" }} />
+                )} */}
+                {answer &&
+                  ((answer.userOptions[idx].actual &&
+                    answer.userOptions[idx].actual ===
+                      answer.userOptions[idx].userAnswer) ||
+                  answer.userOptions[idx].actual ? (
+                    <Check className="mcq-icons" style={{ color: "green" }} />
+                  ) : answer.userOptions[idx].actual !==
+                    answer.userOptions[idx].userAnswer ? (
+                    <Close className="mcq-icons" style={{ color: "red" }} />
+                  ) : (
+                    <Check className="mcq-icons" style={{ color: "white" }} />
+                  ))}
 
-              {type === "image" ? <img src={option} alt="item" /> : option}
-            </label>
-          ))}
+                {type === "image" ? (
+                  <img className="option-img" src={option} alt="item" />
+                ) : (
+                  <span className="option-text">{option}</span>
+                )}
+              </div>
+            ))}
+          </div>
 
-          <label htmlFor="comment">Additional Comments: </label>
-          <textarea
+          <FormInputTextArea
+            label="Additional Comments:"
             name="comment"
             value={comment}
-            onChange={this.handleComment}
+            handleChange={this.handleComment}
             rows="5"
             cols="50"
-            id="comment"
+            disabled={this.props.answer ? true : false}
           />
+
           <ErrMessage message={errMessage} />
-          <button disabled={answer ? true : false} type="submit">
+
+          <CustomButton disabled={answer ? true : false} type="submit">
             Submit
-          </button>
+          </CustomButton>
         </form>
       </div>
     );

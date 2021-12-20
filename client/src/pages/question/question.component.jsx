@@ -7,30 +7,65 @@ import { questionTypes } from "../../redux/question/question.types";
 import InputOptions from "../../components/inputOptions/inputOptions.component";
 import McqAndMsqOptions from "../../components/mcqandmsqOptions/mcqandmsqOptions.component";
 import CodeOptions from "../../components/codeOptions/codeOptions.component";
+import Star from "./star.png";
 
+import "./question.styles.css";
 const QuestionPage = ({ currQuestion, currAnswer }) => {
   const { title, question, points, image, questionType } = currQuestion;
-  // console.log(currAnswer);
+  const qn_paras = question.split(/\\r\\n|\\n|\\r/);
+  console.log(qn_paras);
+  // console.log(typeof JSON.stringify(question));
+  // console.log(question);
+  // console.log(JSON.stringify(question));
+  // console.log(typeof "hello jjsye \n jahs");
+  // console.log("hello jjsye \n jahs");
   return (
     <div>
-      <h1>{title}</h1>
-      {/* {currAnswer ? <div>{currAnswer.userOptions[0].option}</div> : <div />} */}
-      <div>{points} points</div>
-      {currAnswer && (
+      <div className="qnPage-title-container">
         <div>
-          you have earned a score of {currAnswer.score} points for this
-          question.
+          <h1 className="title">{title}</h1>
+          {currAnswer && (
+            <span className="qn-page-score-display">
+              <span>you have earned a score of</span>
+              <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+                {" "}
+                {currAnswer.score}{" "}
+              </span>
+              <span>points for this question.</span>
+            </span>
+          )}
         </div>
-      )}
-      <h3>{question}</h3>
-      {image ? <img src={image} alt="suppImage" /> : <div />}
-      {questionType === questionTypes.INPUT ? (
-        <InputOptions question={currQuestion} answer={currAnswer} />
-      ) : questionType === questionTypes.CODE ? (
-        <CodeOptions question={currQuestion} answer={currAnswer} />
-      ) : (
-        <McqAndMsqOptions question={currQuestion} answer={currAnswer} />
-      )}
+
+        <div>
+          <img src={Star} alt="star" className="points-star" />
+          <div className="points">
+            <div className="points-no">{points}</div>
+            <div className="points-points">points</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="questionPage-container">
+        {question.split(/\\r\\n|\\n|\\r/).map((item) => {
+          console.log(item);
+          return (
+            <span className="qnPage-question">
+              {`${item}`}
+              <br />
+              <br />
+            </span>
+          );
+        })}
+        <div className="qnPage-question">{"hello jjsye \n jahs"}</div>
+        {image ? <img className="qn-img" src={image} alt="qnImage" /> : <div />}
+        {questionType === questionTypes.INPUT ? (
+          <InputOptions question={currQuestion} answer={currAnswer} />
+        ) : questionType === questionTypes.CODE ? (
+          <CodeOptions question={currQuestion} answer={currAnswer} />
+        ) : (
+          <McqAndMsqOptions question={currQuestion} answer={currAnswer} />
+        )}
+      </div>
     </div>
   );
 };

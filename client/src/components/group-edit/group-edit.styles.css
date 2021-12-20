@@ -1,12 +1,16 @@
 .grp-edit-overlay {
   width: 60%;
-  height: 75%;
+  height: 80%;
   margin-top: 20px;
   background: white;
   z-index: 1;
   position: fixed;
   box-shadow: 4px 4px 20px 8px rgba(0, 0, 0, 0.25);
   /* backdrop-filter: blur(10px); */
+}
+
+.grp-edit-title {
+  text-align: center;
 }
 
 .grp-image-input {
@@ -34,5 +38,5 @@
 }
 
 .grp-edit-form {
-  margin-top: 30px;
+  margin-top: -20px;
 }

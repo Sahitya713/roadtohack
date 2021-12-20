@@ -68,7 +68,7 @@ class GroupEditPopUp extends React.Component {
     return (
       <div className="grp-edit-overlay">
         <Close onClick={toggleEdit} className="close-group" />
-        <h2 className="title">Edit your Group Details</h2>
+        <h2 className="title grp-edit-title">Edit your Group Details</h2>
         <form className="grp-edit-form" onSubmit={this.handleSubmit}>
           <img className="grp-img" src={displayImage} alt="grp-img" />
           <br />

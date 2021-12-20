@@ -7,6 +7,8 @@ import { createAnswerStart } from "../../redux/answer/answer.actions";
 import { createStructuredSelector } from "reselect";
 import { downloadInputStart } from "../../redux/question/question.actions";
 
+import "./codeOptions.styles.css";
+
 class CodeOptions extends React.Component {
   constructor(props) {
     super(props);
@@ -71,7 +73,7 @@ class CodeOptions extends React.Component {
     const { comment, errMessage } = this.state;
 
     return (
-      <div>
+      <div className="codeOptions-container">
         <h2>Input</h2>
         <span>
           Download the following file to see an example outputs of your
