@@ -45,6 +45,7 @@ input[type="checkbox"]:hover {
 }
 input[type="checkbox"]:disabled:hover {
   filter: brightness(100%);
+  cursor: auto;
 }
 
 .mcq-icons {

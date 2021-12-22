@@ -270,8 +270,8 @@ exports.getAllAnswersByGroup = catchAsync(async (req, res, next) => {
       $project: {
         isAnswerCorrect: 1,
         userOptions: 1,
-        user: { _id: 1, group: 1 },
-        question: { points: 1, _id: 1, slug: 1, questionType: 1 },
+        user: "$user.displayName",
+        question: { points: 1, _id: 1, slug: 1, questionType: 1, title: 1 },
         userAnswers: 1,
         userCode: 1,
         score: 1,

@@ -96,7 +96,7 @@ export function* onCreateAnswerStart() {
 export function* onFetchGroupScoresStart() {
   yield takeLatest(
     answerActionTypes.FETCH_GROUP_ANSWERS_START,
-    fetchGroupScoresAsync
+    fetchAnswersAsync
   );
 }
 

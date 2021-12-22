@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 
 export const selectAnswer = (state) => state.answer;
 
-const selectAnswers = createSelector(
+export const selectAnswers = createSelector(
   [selectAnswer],
   (answer) => answer.answers
 );
@@ -23,12 +23,9 @@ export const selectIsGroupScoresFetching = createSelector(
   (ans) => ans.isFetching
 );
 
-// const selectGroupAnswers = createSelector(
-//   [selectAnswer],
-//   (answers) => {
-
-//   }
-// )
+export const selectTotalScore = createSelector([selectAnswers], (answers) =>
+  answers.reduce((accumulator, answer) => accumulator + answer.score, 0)
+);
 
 export const selectAnswerStatuses = createSelector([selectAnswer], (answer) => {
   const res = {};

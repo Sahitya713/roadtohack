@@ -13,6 +13,16 @@
   border: none;
 }
 
+.custom-button:disabled {
+  border: none;
+  color: rgb(143, 31, 31);
+  cursor: auto;
+}
+.custom-button:disabled:hover {
+  border: none;
+  color: rgb(143, 31, 31);
+}
+
 .custom-button:hover {
   border: none;
   /* background-color: #d32d2d; */
@@ -20,7 +30,6 @@
 
   /* border: 1px solid #ec3f3f; */
 }
-
 .google-sign-in {
   background-color: #4285f4;
   color: white;

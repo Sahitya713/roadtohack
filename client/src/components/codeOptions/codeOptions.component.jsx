@@ -8,6 +8,7 @@ import { createStructuredSelector } from "reselect";
 import { downloadInputStart } from "../../redux/question/question.actions";
 import FormInputTextArea from "../form-input-textarea/form-input-textarea.component";
 import "./codeOptions.styles.css";
+import CustomButton3 from "../custom-button3/custom-button3.component";
 
 class CodeOptions extends React.Component {
   constructor(props) {
@@ -74,22 +75,24 @@ class CodeOptions extends React.Component {
 
     return (
       <div className="code-options-container">
-        <span>
+        <span className="code-options-instructions">
           Download the following file to see an example outputs of your
           Application.
         </span>
         <span>Example Outputs: </span>
 
-        <CustomButton
+        <CustomButton3
           onClick={() => downloadInputStart(this.props.question._id)}
         >
           Download
-        </CustomButton>
+        </CustomButton3>
 
         <form onSubmit={this.handleSubmit}>
-          <h2>Solution</h2>
+          <h2 className="code-options-titles">Your Solution</h2>
 
-          <div>Please upload a Python File with your solution.</div>
+          <div className="code-options-instructions">
+            Please upload a Python File with your solution.
+          </div>
           <div>
             Code File:
             <input

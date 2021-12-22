@@ -13,6 +13,7 @@ const answerReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         answers: action.payload,
+        isFetching: false,
       };
     case answerActionTypes.FETCH_GROUP_ANSWERS_SUCCESS:
       return {
@@ -22,16 +23,13 @@ const answerReducer = (state = INITIAL_STATE, action) => {
       };
     case answerActionTypes.FETCH_ANSWERS_FAILURE:
     case answerActionTypes.CREATE_ANSWER_FAILURE:
-      return {
-        ...state,
-        errorMessage: action.payload,
-      };
     case answerActionTypes.FETCH_GROUP_ANSWERS_FAILURE:
       return {
         ...state,
         errorMessage: action.payload,
         isFetching: false,
       };
+
     case answerActionTypes.FETCH_GROUP_ANSWERS_START:
       return {
         ...state,
