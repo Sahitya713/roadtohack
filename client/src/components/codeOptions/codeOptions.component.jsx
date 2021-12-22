@@ -6,7 +6,7 @@ import { selectCurrentUser } from "../../redux/user/user.selectors";
 import { createAnswerStart } from "../../redux/answer/answer.actions";
 import { createStructuredSelector } from "reselect";
 import { downloadInputStart } from "../../redux/question/question.actions";
-
+import FormInputTextArea from "../form-input-textarea/form-input-textarea.component";
 import "./codeOptions.styles.css";
 
 class CodeOptions extends React.Component {
@@ -73,37 +73,21 @@ class CodeOptions extends React.Component {
     const { comment, errMessage } = this.state;
 
     return (
-      <div className="codeOptions-container">
-        <h2>Input</h2>
+      <div className="code-options-container">
         <span>
           Download the following file to see an example outputs of your
           Application.
         </span>
         <span>Example Outputs: </span>
 
-        {/* <Link to={input} target="_blank" download>
+        <CustomButton
+          onClick={() => downloadInputStart(this.props.question._id)}
+        >
           Download
-        </Link> */}
-        <div onClick={() => downloadInputStart(this.props.question._id)}>
-          Download
-        </div>
+        </CustomButton>
 
-        {/* <a href={`/api/v1/question/download/${input}`}>Download</a> */}
         <form onSubmit={this.handleSubmit}>
           <h2>Solution</h2>
-
-          {/* <div>Please upload a Python File with your solution.</div>
-          <div>
-            Code File:
-            <label>
-              Upload
-              <input
-                type="file"
-                onChange={this.handleFileChange}
-                // accept=".py .txt"
-              />
-            </label>
-          </div> */}
 
           <div>Please upload a Python File with your solution.</div>
           <div>
@@ -118,14 +102,14 @@ class CodeOptions extends React.Component {
           </div>
           <br />
 
-          <label htmlFor="comment">Additional Comments: </label>
-          <textarea
+          <FormInputTextArea
+            label="Additional Comments:"
             name="comment"
             value={comment}
-            onChange={this.handleChange}
+            handleChange={this.handleComment}
             rows="5"
             cols="50"
-            id="comment"
+            disabled={this.props.answer ? true : false}
           />
 
           <ErrMessage message={errMessage} />
