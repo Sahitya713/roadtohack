@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  /* justify-content: stretch; */
 
   /* width: 95%; */
   background: white;
@@ -15,6 +16,8 @@
   font-size: 18px;
   position: relative;
   top: -10px;
+  left: 20;
+  text-align: left;
 }
 
 .points-star {

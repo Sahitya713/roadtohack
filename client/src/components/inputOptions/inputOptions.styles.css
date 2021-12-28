@@ -1,0 +1,58 @@
+.sample-title {
+  width: 100%;
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.sample-box {
+  background-color: rgb(223, 222, 222);
+  width: 100%;
+  padding: 20px 0px;
+  text-indent: 20px;
+
+  text-align: left;
+}
+
+.inputs-container {
+  /* display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto;
+  gap: 10px;
+
+  justify-items: start; */
+
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.input-overlay {
+  width: 30%;
+  /* background-color: yellow; */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.input-wrap {
+  width: 100%;
+  text-align: left;
+  position: relative;
+  bottom: -12px;
+  /* background-color: lightgreen; */
+}
+
+.input-box {
+  background-color: rgb(222, 222, 222);
+  width: 100px;
+  padding: 5px 20px;
+  text-indent: 20px;
+}
+
+.input-correct-icon::before {
+  font-size: 30px;
+  position: relative;
+  top: -10;
+}

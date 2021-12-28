@@ -4,14 +4,37 @@
   /* align-items: flex-start; */
   width: 100%;
   /* background: yellow; */
+  white-space: pre-line;
 }
 
 .code-options-instructions {
   width: 100%;
   text-align: left;
+  margin-top: 20px;
+  color: darkblue;
+  /* font-size: 20px; */
+  /* background-color: lightgray; */
 }
 
 .code-options-titles {
   width: 100%;
   text-align: left;
+  margin-top: 50px;
+}
+
+.download-container {
+  display: flex;
+  flex: row;
+  align-items: center;
+  /* padding: 20px 0px; */
+  margin-top: 20px;
+}
+
+.download-label {
+  font-weight: 500;
+  margin-right: 20px;
+}
+
+input[type="file"] {
+  /* display: none; */
 }

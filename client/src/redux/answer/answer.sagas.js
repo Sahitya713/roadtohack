@@ -7,6 +7,7 @@ import {
   createAnswerSuccess,
   fetchGroupAnswersFailure,
   fetchGroupAnswersSuccess,
+  downloadCodeFailure,
 } from "./answer.actions";
 
 import axios from "axios";
@@ -86,6 +87,23 @@ export function* fetchGroupScoresAsync(action) {
     yield put(fetchGroupAnswersFailure(error.response.data.message));
   }
 }
+
+export function* downloadCodeAsync(action) {
+  try {
+    const response = yield axios({
+      url: `/api/v1/answer/download-code/${action.payload.url}`,
+      method: "get",
+    });
+
+    const link = document.createElement("a");
+    link.href = response.data.data;
+    link.setAttribute("download", "file2.py");
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    yield put(downloadCodeFailure(error.response.data.message));
+  }
+}
 export function* onFetchAnswersStart() {
   yield takeLatest(answerActionTypes.FETCH_ANSWERS_START, fetchAnswersAsync);
 }
@@ -108,6 +126,10 @@ export function* onCreateAnswerSuccess() {
   yield takeLatest(answerActionTypes.CREATE_ANSWER_SUCCESS, fetchAnswersAsync);
 }
 
+export function* downloadCodeFile() {
+  yield takeLatest(answerActionTypes.DOWNLOAD_CODE_START, downloadCodeAsync);
+}
+
 export function* answerSagas() {
   yield all([
     call(onFetchAnswersStart),
@@ -115,5 +137,6 @@ export function* answerSagas() {
     call(onCreateAnswerSuccess),
     call(onCreateAnswerStart),
     call(onFetchGroupScoresStart),
+    call(downloadCodeFile),
   ]);
 }

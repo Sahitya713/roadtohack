@@ -2,12 +2,15 @@ import React from "react";
 // import { Link } from "react-router-dom";
 import ErrMessage from "../errMessage/errMessage.component";
 import CustomButton from "../custom-button/custom-button.component";
+import CustomButton3 from "../custom-button/custom-button.component";
+import FormInputTextArea from "../form-input-textarea/form-input-textarea.component";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
 import { createAnswerStart } from "../../redux/answer/answer.actions";
 import { createStructuredSelector } from "reselect";
-import { downloadInputStart } from "../../redux/question/question.actions";
-
+import { downloadCodeStart } from "../../redux/answer/answer.actions";
+import { Check, Close } from "@material-ui/icons";
+import "./inputOptions.styles.css";
 // import { selectCurrQuestion } from "../../redux/question/question.selectors";
 
 class InputOptions extends React.Component {
@@ -73,15 +76,23 @@ class InputOptions extends React.Component {
         comment,
       });
     }
+
+    this.setState({ errMessage: "" });
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
   handleUserAnswers = (e) => {
     const { value, name } = e.target;
+    console.log(name);
+    console.log(this.state.userAnswers);
+    console.log(this.state.userAnswers.slice(2));
+    console.log(name + 1);
+    console.log(this.state.userAnswers.slice(name));
     this.setState(({ userAnswers }) => ({
       userAnswers: [
         ...userAnswers.slice(0, name),
         value,
-        ...userAnswers.slice(name + 1),
+        ...userAnswers.slice(parseInt(name) + 1, userAnswers.length),
       ],
     }));
     // this.setState({ [name]: value });
@@ -99,17 +110,18 @@ class InputOptions extends React.Component {
   render() {
     console.log(this.props);
     // const { downloadInputStart } = this.props;
+    const { answer } = this.props;
     const { sampleInput, sampleOutput, inputs } = this.props.question;
     const { userAnswers, errMessage, comment } = this.state;
-
+    console.log(userAnswers);
     return (
-      <div>
+      <div className="code-options-container">
         {sampleInput.map((input, idx) => (
           <div key={idx}>
-            <h2>Sample Input {`${idx + 1}`}</h2>
-            <div>{input}</div>
-            <h3>Output</h3>
-            <div>{sampleOutput[idx]}</div>
+            <div className="sample-title">Sample Input {`${idx + 1}`}</div>
+            <div className="sample-box">{input}</div>
+            <div className="sample-title">Sample Output {`${idx + 1}`}</div>
+            <div className="sample-box">{sampleOutput[idx]}</div>
           </div>
         ))}
         {/* <h2>Input</h2>
@@ -125,54 +137,102 @@ class InputOptions extends React.Component {
         {/* <div onClick={() => downloadInputStart(_id)}>Download</div> */}
         {/* <a href={`/api/v1/question/download/${input}`}>Download</a> */}
         <form onSubmit={this.handleSubmit}>
-          <h2>Solution</h2>
-          {inputs.map((inp, idx) => (
-            <div key={idx}>
-              <div>Input: {inp}</div>
-              <label>
-                Your Output:
-                <input
-                  type="text"
+          <h2 className="code-options-titles">Your Solution</h2>
+
+          <div className="code-options-instructions">
+            Please type down your answer to each of the inputs below. If the
+            expected output is a list/ array, seperate each of the elements in
+            the list with a comma (,).
+          </div>
+          <div className="code-options-instructions">
+            {"E.g. [1,2,3] -> 1,2,3"}
+          </div>
+          <div className="inputs-container">
+            {inputs.map((inp, idx) => (
+              <div key={idx} className="input-overlay">
+                <span className="input-wrap">
+                  <span>Input: </span>
+                  <span className="input-box">{inp}</span>
+                </span>
+
+                <FormInputTextArea
+                  label="Your Output:"
                   name={idx}
                   value={userAnswers[idx]}
-                  onChange={this.handleUserAnswers}
+                  handleChange={this.handleUserAnswers}
+                  rows="4"
+                  cols="50"
+                  // disabled={answer ? true : false}
+                  style={{ margin: "0px", width: "100%" }}
                 />
-              </label>
-              {this.props.answer && (
-                <div>
-                  {this.props.answer.userAnswers[idx].correct
-                    ? "Correct"
-                    : "Incorrect"}
-                </div>
-              )}
-            </div>
-          ))}
+                {answer && (
+                  <div>
+                    {answer.userAnswers[idx].correct ? (
+                      <Check
+                        className="input-correct-icon"
+                        style={{
+                          color: "green",
+                          fontSize: "30px",
+                          position: "relative",
+                          top: "-20",
+                        }}
+                      />
+                    ) : (
+                      <Close
+                        className="input-correct-icon"
+                        style={{
+                          color: "red",
+                          fontSize: "30px",
+                          position: "relative",
+                          top: "-20",
+                        }}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
 
-          <div>
+          {answer && (
+            <div className="code-options-container">
+              <span className="code-options-instructions">
+                View your previously uploaded code here.
+              </span>
+              <div className="download-container">
+                <div className="download-label">Uploaded Code: </div>
+
+                <CustomButton3 onClick={() => downloadCodeStart(answer._id)}>
+                  Download Code
+                </CustomButton3>
+              </div>
+            </div>
+          )}
+
+          <div className="code-options-instructions">
             Please also upload a python file containing the code that helped you
             arrive at your answer.
           </div>
-          <div>
-            Code File:
-            <label>
-              Upload
-              <input
-                type="file"
-                onChange={this.handleFileChange}
-                // accept=".py .txt"
-              />
-            </label>
-          </div>
-          <br />
+          <div className="download-container">
+            <div className="download-label">Code File: </div>
 
-          <label htmlFor="comment">Additional Comments: </label>
-          <textarea
+            <input
+              type="file"
+              onChange={this.handleFileChange}
+              id="codeFile"
+              name="userCode"
+              accept=".py"
+            />
+          </div>
+
+          <FormInputTextArea
+            label="Additional Comments:"
             name="comment"
             value={comment}
-            onChange={this.handleChange}
+            handleChange={this.handleChange}
             rows="5"
             cols="50"
-            id="comment"
+            // disabled={answer ? true : false}
           />
 
           <ErrMessage message={errMessage} />
@@ -189,7 +249,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   createAnswer: (answer) => dispatch(createAnswerStart(answer)),
-  downloadInputStart: (id) => dispatch(downloadInputStart(id)),
+  downloadCodeStart: (id) => dispatch(downloadCodeStart(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(InputOptions);
 

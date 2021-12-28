@@ -224,7 +224,11 @@ exports.getDownloadUrl = catchAsync(async (req, res) => {
   //   Input-Files/53d782e3-14c5-47e8-84aa-2fb6f324f0d7.py
 
   const urlElems = fileUrl.split("/");
-  const filename = urlElems.pop();
+  var filename = urlElems.pop();
+  console.log(filename);
+  console.log(typeof filename);
+  filename = filename.replace(/%20/g, " ");
+  console.log(filename);
 
   const key = `Input-Files/${filename}`;
 

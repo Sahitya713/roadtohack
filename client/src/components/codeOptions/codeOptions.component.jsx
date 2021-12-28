@@ -6,6 +6,7 @@ import { selectCurrentUser } from "../../redux/user/user.selectors";
 import { createAnswerStart } from "../../redux/answer/answer.actions";
 import { createStructuredSelector } from "reselect";
 import { downloadInputStart } from "../../redux/question/question.actions";
+import { downloadCodeStart } from "../../redux/answer/answer.actions";
 import FormInputTextArea from "../form-input-textarea/form-input-textarea.component";
 import "./codeOptions.styles.css";
 import CustomButton3 from "../custom-button3/custom-button3.component";
@@ -59,18 +60,22 @@ class CodeOptions extends React.Component {
         comment,
       });
     }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+
   handleFileChange = (event) => {
     // Update the state
     this.setState({ userCode: event.target.files[0], changed: true });
   };
 
   render() {
-    const { downloadInputStart } = this.props;
+    const { downloadInputStart, downloadCodeStart, answer, question } =
+      this.props;
     const { comment, errMessage } = this.state;
 
     return (
@@ -79,22 +84,38 @@ class CodeOptions extends React.Component {
           Download the following file to see an example outputs of your
           Application.
         </span>
-        <span>Example Outputs: </span>
+        <div className="download-container">
+          <div className="download-label">Example Outputs: </div>
 
-        <CustomButton3
-          onClick={() => downloadInputStart(this.props.question._id)}
-        >
-          Download
-        </CustomButton3>
+          <CustomButton3 onClick={() => downloadInputStart(question._id)}>
+            Download
+          </CustomButton3>
+        </div>
 
         <form onSubmit={this.handleSubmit}>
           <h2 className="code-options-titles">Your Solution</h2>
 
+          {answer && (
+            <div className="code-options-container">
+              <span className="code-options-instructions">
+                View your previously uploaded code here.
+              </span>
+              <div className="download-container">
+                <div className="download-label">Uploaded Code: </div>
+
+                <CustomButton3 onClick={() => downloadCodeStart(answer._id)}>
+                  Download Code
+                </CustomButton3>
+              </div>
+            </div>
+          )}
+
           <div className="code-options-instructions">
             Please upload a Python File with your solution.
           </div>
-          <div>
-            Code File:
+          <div className="download-container">
+            <div className="download-label">Code File: </div>
+
             <input
               type="file"
               onChange={this.handleFileChange}
@@ -103,16 +124,15 @@ class CodeOptions extends React.Component {
               accept=".py"
             />
           </div>
-          <br />
 
           <FormInputTextArea
             label="Additional Comments:"
             name="comment"
             value={comment}
-            handleChange={this.handleComment}
+            handleChange={this.handleChange}
             rows="5"
             cols="50"
-            disabled={this.props.answer ? true : false}
+            // disabled={this.props.answer ? true : false}
           />
 
           <ErrMessage message={errMessage} />
@@ -130,5 +150,6 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) => ({
   createAnswer: (answer) => dispatch(createAnswerStart(answer)),
   downloadInputStart: (id) => dispatch(downloadInputStart(id)),
+  downloadCodeStart: (id) => dispatch(downloadCodeStart(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CodeOptions);

@@ -24,6 +24,7 @@ const answerReducer = (state = INITIAL_STATE, action) => {
     case answerActionTypes.FETCH_ANSWERS_FAILURE:
     case answerActionTypes.CREATE_ANSWER_FAILURE:
     case answerActionTypes.FETCH_GROUP_ANSWERS_FAILURE:
+    case answerActionTypes.DOWNLOAD_CODE_FAILURE:
       return {
         ...state,
         errorMessage: action.payload,

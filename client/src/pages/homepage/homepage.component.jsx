@@ -62,7 +62,8 @@ class Homepage extends React.Component {
           onViewportChange={(nextViewport) =>
             this.setState({ viewport: nextViewport })
           }
-          mapStyle="mapbox://styles/sahitya002/ckrp3bot41jlh17p4riu1tllq"
+          // mapStyle="mapbox://styles/sahitya002/ckrp3bot41jlh17p4riu1tllq"
+          mapStyle="mapbox://styles/sahitya002/ckxpovgaw6y0g14mm6qrzdlw5"
           onDblClick={this.handleAddClick}
           className="map"
         >

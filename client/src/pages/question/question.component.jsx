@@ -23,16 +23,16 @@ const QuestionPage = ({ currQuestion, currAnswer }) => {
     <div>
       <div className="qnPage-title-container">
         <div>
-          <h1 className="title">{title}</h1>
+          <div className="title">{title}</div>
           {currAnswer && (
-            <span className="qn-page-score-display">
+            <div className="qn-page-score-display">
               <span>you have earned a score of</span>
               <span style={{ fontWeight: "bold", fontSize: "25px" }}>
                 {" "}
                 {currAnswer.score}{" "}
               </span>
               <span>points for this question.</span>
-            </span>
+            </div>
           )}
         </div>
 
@@ -46,17 +46,16 @@ const QuestionPage = ({ currQuestion, currAnswer }) => {
       </div>
 
       <div className="questionPage-container">
-        {question.split(/\\r\\n|\\n|\\r/).map((item) => {
-          console.log(item);
+        {question.split(/\\r\\n|\\n|\\r/).map((item, idx) => {
           return (
-            <span className="qnPage-question">
+            <span key={idx} className="qnPage-question">
               {`${item}`}
               <br />
               <br />
             </span>
           );
         })}
-        <div className="qnPage-question">{"hello jjsye \n jahs"}</div>
+
         {image ? <img className="qn-img" src={image} alt="qnImage" /> : <div />}
         {questionType === questionTypes.INPUT ? (
           <InputOptions question={currQuestion} answer={currAnswer} />

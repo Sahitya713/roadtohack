@@ -1,6 +1,7 @@
 const multer = require("multer");
 
 const Group = require("../models/groupModel");
+const User = require("../models/userModel");
 const factory = require("./handlerFactory");
 
 const awsManager = require("../utils/awsManager");
@@ -9,8 +10,29 @@ const AppError = require("../utils/appError");
 
 exports.getAllGroups = factory.getAll(Group);
 exports.deleteGroup = factory.deleteOne(Group);
-exports.getGroup = factory.getOne(Group);
+// exports.getGroup = factory.getOne(Group);
 exports.getAllGroupsByCode = factory.getAllByCode(Group);
+
+exports.getGroup = catchAsync(async (req, res, next) => {
+  let doc = await Group.findById(req.params.id);
+  // const doc = await query;
+
+  if (!doc) {
+    return next(
+      new AppError(`no document found with the ID ${req.params.id}`, 404)
+    );
+  }
+
+  let members = await User.find({ group: req.params.id });
+
+  members = members.map((mem) => mem.displayName);
+  doc["members"] = members;
+
+  res.status(200).json({
+    status: "success",
+    data: doc,
+  });
+});
 
 const storage = multer.memoryStorage({
   destination: function (req, file, callback) {
