@@ -1,0 +1,14 @@
+.message-page {
+  min-height: 10em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 50px;
+
+  /* font-size: 28px; */
+}
+
+.message {
+  font-size: 28px;
+}

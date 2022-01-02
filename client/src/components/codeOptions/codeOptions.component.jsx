@@ -103,7 +103,10 @@ class CodeOptions extends React.Component {
               <div className="download-container">
                 <div className="download-label">Uploaded Code: </div>
 
-                <CustomButton3 onClick={() => downloadCodeStart(answer._id)}>
+                <CustomButton3
+                  type="button"
+                  onClick={() => downloadCodeStart(answer._id)}
+                >
                   Download Code
                 </CustomButton3>
               </div>

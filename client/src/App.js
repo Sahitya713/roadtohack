@@ -34,7 +34,7 @@ class App extends React.Component {
     ) : (
       <div className="App">
         <Switch>
-          <Route
+          {/* <Route
             exact
             path="/"
             render={(props) =>
@@ -48,18 +48,29 @@ class App extends React.Component {
                 <Message message={challengeStatus.message} />
               )
             }
+          /> */}
+          <Route
+            exact
+            path="/"
+            render={(props) =>
+              challengeStatus.status === statuses.W ? (
+                <Message message={challengeStatus.message} />
+              ) : currentUser ? (
+                <MainPageContainer {...props} />
+              ) : (
+                <SignInPage />
+              )
+            }
           />
           <Route
             path="/"
             render={(props) =>
-              challengeStatus.status === statuses.O ? (
-                currentUser ? (
-                  <MainPageContainer {...props} />
-                ) : (
-                  <Redirect to="/" />
-                )
-              ) : (
+              challengeStatus.status === statuses.W ? (
                 <Message message={challengeStatus.message} />
+              ) : currentUser ? (
+                <MainPageContainer {...props} />
+              ) : (
+                <Redirect to="/" />
               )
             }
           />

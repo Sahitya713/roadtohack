@@ -1,4 +1,22 @@
-.grp-container {
+.template {
+  min-height: 100vh;
+  display: flex;
+}
+
+.left {
+  /* width: 65vw; */
+  width: 40%;
+  background-color: #fff;
+  position: relative;
+}
+
+.right {
+  width: 60%;
+  background-color: #027979;
+  overflow: hidden;
+}
+
+.layout {
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -7,18 +25,194 @@
   align-items: center;
 }
 
-.grp-img {
+.total_score {
+  font-size: 17px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: bolder;
+  margin-top: 100px;
+}
+
+.points {
+  font-size: 40px;
+  font-family: "Quantico", sans-serif;
+  font-weight: 750;
+  color: rgb(2, 121, 121);
+  margin-top: 90px;
+}
+
+.grp_img {
   margin-top: 30px;
   border-radius: 50%;
   width: 200px;
   height: 200px;
+  position: absolute;
+  align-self: center;
+  top: 17%;
 }
 
-.grp-name {
+.grp_name {
   font-size: 30px;
   font-weight: bold;
-  margin-right: 20px;
   font-family: "Quantico", sans-serif;
-  /* position: absolute;
-  left: 50%; */
+  margin-top: 147px;
+  color: #000;
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+.grp_members {
+  font-size: 22px;
+  font-weight: 150px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  color: rgb(2, 121, 121);
+  font-style: oblique;
+}
+
+.timeline {
+  position: relative;
+  max-width: 1200px;
+  max-height: 1200px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.timeline::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  background-color: beige;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -3px;
+}
+
+.left_container {
+  padding: 1px 40px;
+  position: relative;
+  background-color: inherit;
+  width: 50%;
+}
+
+/* The circles on the timeline */
+.left_container::after {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  right: 63px;
+  background-color: white;
+  border: 4px solid #ff9f55;
+  top: 5px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.right_container {
+  padding: 1px 0px 1px 40px;
+  position: relative;
+  background-color: inherit;
+  width: 50%;
+}
+
+/* The circles on the timeline */
+.right_container::after {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  border: 4px solid #ff9f55;
+  top: 5px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.left_container {
+  left: 0;
+}
+
+.right_container {
+  left: 50%;
+}
+
+.left_container::before {
+  content: "";
+  height: 0;
+  position: absolute;
+  z-index: 1;
+  left: 530px;
+  top: 10px;
+  border: medium solid white;
+  border-width: 10px, 0, 10px, 10px;
+  border-color: transparent transparent transparent white;
+}
+
+.right_container::before {
+  content: "";
+  height: 0;
+  position: absolute;
+  width: 0px;
+  z-index: 1;
+  left: 30px;
+  top: 10px;
+  border: medium solid white;
+  border-width: 10px, 10px, 10px, 0;
+  border-color: transparent white transparent transparent;
+}
+
+.right_container::after {
+  left: -16px;
+}
+
+.left_details {
+  left: 50%;
+  width: 200px;
+  height: fit-content;
+  background-color: white;
+  position: relative;
+  border-radius: 6px;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.right_details {
+  background-color: white;
+  height: fit-content;
+  width: 200px;
+  position: relative;
+  border-radius: 6px;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.qn_title {
+  font-size: large;
+  font-family: "Quantico", sans-serif;
+  padding-bottom: 10px;
+}
+
+.info {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.grey_circles {
+  width: 25px;
+  height: 25px;
+  left: 550px;
+  position: relative;
+  background-color: white;
+  border: 4px solid grey;
+  top: 15px;
+  border-radius: 50%;
+  margin-bottom: 50px;
+  z-index: 1;
+}
+
+.total_qn_count {
+  margin-top: 150px;
+  font-size: larger;
+  font-family: "Quantico", sans-serif;
+  font-size: 25px;
+  font-weight: 400;
 }

@@ -2,7 +2,7 @@ import React from "react";
 // import { Link } from "react-router-dom";
 import ErrMessage from "../errMessage/errMessage.component";
 import CustomButton from "../custom-button/custom-button.component";
-import CustomButton3 from "../custom-button/custom-button.component";
+import CustomButton3 from "../custom-button3/custom-button3.component";
 import FormInputTextArea from "../form-input-textarea/form-input-textarea.component";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
@@ -110,10 +110,10 @@ class InputOptions extends React.Component {
   render() {
     console.log(this.props);
     // const { downloadInputStart } = this.props;
-    const { answer } = this.props;
+    const { answer, downloadCodeStart } = this.props;
     const { sampleInput, sampleOutput, inputs } = this.props.question;
     const { userAnswers, errMessage, comment } = this.state;
-    console.log(userAnswers);
+
     return (
       <div className="code-options-container">
         {sampleInput.map((input, idx) => (
@@ -124,6 +124,7 @@ class InputOptions extends React.Component {
             <div className="sample-box">{sampleOutput[idx]}</div>
           </div>
         ))}
+
         {/* <h2>Input</h2>
         <span>
           Download the input file below and submit your solution to the given
@@ -202,13 +203,18 @@ class InputOptions extends React.Component {
               <div className="download-container">
                 <div className="download-label">Uploaded Code: </div>
 
-                <CustomButton3 onClick={() => downloadCodeStart(answer._id)}>
+                <CustomButton3
+                  type="button"
+                  onClick={() => {
+                    console.log("starting code download");
+                    downloadCodeStart(answer._id);
+                  }}
+                >
                   Download Code
                 </CustomButton3>
               </div>
             </div>
           )}
-
           <div className="code-options-instructions">
             Please also upload a python file containing the code that helped you
             arrive at your answer.

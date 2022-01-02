@@ -1,9 +1,19 @@
+.grp-edit-container {
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  background: rgba(160, 157, 157, 0.7);
+  z-index: 98;
+  position: fixed;
+}
 .grp-edit-overlay {
   width: 60%;
-  height: 80%;
-  margin-top: 20px;
+  height: 88%;
+  margin-top: 60px;
+  margin-left: 20%;
+  margin-right: auto;
   background: white;
-  z-index: 1;
+  z-index: 99;
   position: fixed;
   box-shadow: 4px 4px 20px 8px rgba(0, 0, 0, 0.25);
   /* backdrop-filter: blur(10px); */
@@ -17,6 +27,12 @@
   display: none;
 }
 
+.grp-img-edit {
+  margin-top: 30px;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}
 .image-upload {
   border: 3px solid #ccc;
   display: inline-block;

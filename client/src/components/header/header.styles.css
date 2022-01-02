@@ -6,6 +6,7 @@
   margin-bottom: 0px;
   background: #2c2b31;
   align-items: center;
+  z-index: 100;
 
   @media screen and (max-width: 800px) {
     height: 60px;

@@ -8,6 +8,6 @@ const challengeActionTypes = {
 export const statuses = {
   W: "waiting",
   O: "ongoing",
-  f: "finished",
+  F: "finished",
 };
 export default challengeActionTypes;

@@ -8,10 +8,22 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 // import { Link } from "react-router-dom";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 // import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 
 import "./homepage.styles.css";
 import MarkerCard from "../../components/marker/marker.component";
+
+// added the following 6 lines.
+import mapboxgl from "mapbox-gl";
+
+// The following is required to stop "npm build" from transpiling mapbox code.
+// notice the exclamation point in the import.
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass =
+  // eslint-disable-next-line import/no-webpack-loader-syntax
+  require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 class Homepage extends React.Component {
   constructor() {
@@ -20,8 +32,8 @@ class Homepage extends React.Component {
       viewport: {
         width: "100%",
         height: "100%",
-        latitude: 1.2851,
-        longitude: 103.8329,
+        latitude: 1.2845,
+        longitude: 103.831,
         zoom: 16.5,
       },
       selectedQnId: null,
@@ -67,6 +79,9 @@ class Homepage extends React.Component {
           onDblClick={this.handleAddClick}
           className="map"
         >
+          <div className="welcome-msg-overlay"></div>
+          <div className="welcome-msg">Welcome to Tiong Bahru!</div>
+
           <div className="homepage-overlay">
             <h1 className="homepage-title">{challenge.title}</h1>
             <div className="homepage-desc">

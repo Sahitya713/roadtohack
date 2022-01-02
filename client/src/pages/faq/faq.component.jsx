@@ -28,12 +28,22 @@ const FaqPage = () => (
     <div className="faq-container">
       <h1 className="title-faq">Frequently Asked Questions</h1>
       <div className="faq-question-container">
-        <div classsName="faq-question">
-          1. What time does the competition end?
-        </div>
+        <div className="faq-qn">1. What time does the competition end?</div>
         <div className="faq-answer">
-          The competition will end at 10.20 pm on Sunday. You will no longer be
-          able to...
+          dummy text of the printing and typesetting industry. Lorem Ipsum has
+          been the industry's standard dummy text ever since the 1500s, when an
+          unknown printer took a galley of type and scrambled it to make a type
+          specimen book. It has survived not only five centuries, but also the
+          leap into electronic typesetting, remaining essentially unchanged. It
+          was popularised in the 1960s with the release of Letraset sheets
+          containing Lorem Ipsum passages, and more recently with desktop
+          publishing software like Aldus PageMaker including versions of Lorem
+          Ipsum.
+        </div>
+        <div className="faq-qn">1. What time does the competition end?</div>
+        <div className="faq-answer">
+          The competition will end at 10.20 pm on Sundayyy. You will no longer
+          be able to...
         </div>
       </div>
     </div>

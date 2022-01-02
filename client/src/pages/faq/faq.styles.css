@@ -50,10 +50,21 @@ li:before {
   text-align: left;
 }
 
-.faq-question {
-  font-size: 30px;
+.faq-questionn {
+  font-size: 25px;
   font-weight: 600;
   color: blue;
+}
+
+.faq-qn {
+  font-weight: 600;
+  color: teal;
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.faq-answer {
+  margin-bottom: 15px;
 }
 
 .contact-item {

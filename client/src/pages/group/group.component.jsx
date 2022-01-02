@@ -38,31 +38,73 @@ class GroupPage extends React.Component {
     console.log("group Scores");
     console.log(groupAnswers);
     // const { nameActivated, grpName } = this.state;
-    return isFetching === false ? (
-      <div className="grp-container">
-        <div>Total Score: {totalScore}</div>
-        <div>Questions Answered: {groupAnswers.length} /10</div>
-        <img className="grp-img" src={currGroup.image} alt="grp-img" />
-        <br />
-        <span className="grp-name">{currGroup.name}</span>
-        {isEditTriggered ? <GroupEditPopUp /> : <div></div>}
 
-        {groupAnswers.map(({ user, score, question }, idx) => (
-          // <MemberScore member={member} key={idx} />
-          <div key={idx}>
-            <div>{question.title}</div>
-            <div>
-              {score} / {question.points}{" "}
+    var elements = [];
+
+    for (var i = 0; i < 10 - groupAnswers.length; i++) {
+      elements.push(<div className="grey_circles"></div>);
+    }
+
+    return isFetching === false ? (
+      <div className="template">
+        {isEditTriggered ? <GroupEditPopUp /> : <div></div>}
+        <div className="left">
+          <div className="layout">
+            <div className="total_score">TOTAL SCORE</div>
+            <div className="points">{totalScore} Points</div>
+            <img className="grp_img" src={currGroup.image} alt="grp-img" />
+            <div className="grp_name">{currGroup.name}</div>
+            <div className="grp_members">{currGroup.members[0]}</div>
+            <div className="grp_members">{currGroup.members[1]}</div>
+            <div className="grp_members">{currGroup.members[2]}</div>
+            <div className="grp_members">{currGroup.members[3]}</div>
+
+            <div className="total_qn_count">
+              {" "}
+              Questions Answered: {groupAnswers.length} /10
             </div>
-            <div>answered by: {user}</div>
-            <br />
           </div>
-        ))}
-        {/* {groupAnswers.map((answer, idx) => (
-          <div key={idx}>
-            <div>{answer.question.title}<div>
+        </div>
+
+        <div className="right">
+          <div className="timeline">
+            {groupAnswers.map(({ user, score, question }, idx) => {
+              if (idx % 2 === 0) {
+                return (
+                  <div className="left_container" key={idx}>
+                    <div className="left_details">
+                      <div className="qn_title">{question.title}</div>
+                      <div className="info">
+                        Score: {score}/{question.points} <br></br>
+                        Member: {user}
+                      </div>
+                    </div>
+                  </div>
+                );
+              } else {
+                return (
+                  <div className="right_container" key={idx}>
+                    <div className="right_details">
+                      <div className="qn_title">{question.title}</div>
+                      <div className="info">
+                        Score: {score}/{question.points} <br></br>
+                        Member: {user}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+            })}
+
+            {elements}
           </div>
-        ))} */}
+
+          {/* {groupAnswers.map((answer, idx) => (
+        <div key={idx}>
+          <div>{answer.question.title}<div>
+        </div>
+      ))} */}
+        </div>
       </div>
     ) : (
       <Spinner />

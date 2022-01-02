@@ -66,39 +66,41 @@ class GroupEditPopUp extends React.Component {
     const { grpName, displayImage } = this.state;
 
     return (
-      <div className="grp-edit-overlay">
-        <Close onClick={toggleEdit} className="close-group" />
-        <h2 className="title grp-edit-title">Edit your Group Details</h2>
-        <form className="grp-edit-form" onSubmit={this.handleSubmit}>
-          <img className="grp-img" src={displayImage} alt="grp-img" />
-          <br />
-          <label className="image-upload">
-            <input
-              type="file"
-              onChange={this.selectImage}
-              accept=".jpg, .jpeg .png .pdf"
-              className="grp-image-input"
-            />
-            upload photo
-          </label>
-          <div className="grp-name-wrap">
-            <FormInput
-              name="grpName"
-              // type="grpName"
-              value={grpName}
-              handleChange={this.handleChange}
-              label="Group Name"
-            />
-          </div>
+      <div className="grp-edit-container">
+        <div className="grp-edit-overlay">
+          <Close onClick={toggleEdit} className="close-group" />
+          <h2 className="title grp-edit-title">Edit your Group Details</h2>
+          <form className="grp-edit-form" onSubmit={this.handleSubmit}>
+            <img className="grp-img-edit" src={displayImage} alt="grp-img" />
+            <br />
+            <label className="image-upload">
+              <input
+                type="file"
+                onChange={this.selectImage}
+                accept=".jpg, .jpeg .png .pdf"
+                className="grp-image-input"
+              />
+              upload photo
+            </label>
+            <div className="grp-name-wrap">
+              <FormInput
+                name="grpName"
+                // type="grpName"
+                value={grpName}
+                handleChange={this.handleChange}
+                label="Group Name"
+              />
+            </div>
 
-          <CustomButton
-            style={{ backgroundColor: "rgb(40, 175, 40)" }}
-            type="submit"
-          >
-            save
-          </CustomButton>
-          {/* <CustomButton onClick={toggleEdit}>close</CustomButton> */}
-        </form>
+            <CustomButton
+              style={{ backgroundColor: "rgb(40, 175, 40)" }}
+              type="submit"
+            >
+              save
+            </CustomButton>
+            {/* <CustomButton onClick={toggleEdit}>close</CustomButton> */}
+          </form>
+        </div>
       </div>
     );
   }
