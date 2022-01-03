@@ -15,12 +15,15 @@
 
 .custom-button:disabled {
   border: none;
-  color: rgb(143, 31, 31);
+  /* color: rgb(143, 31, 31); */
+  background-color: darkgray;
+  color: gray;
   cursor: auto;
 }
 .custom-button:disabled:hover {
   border: none;
-  color: rgb(143, 31, 31);
+  /* color: rgb(143, 31, 31); */
+  color: gray;
 }
 
 .custom-button:hover {

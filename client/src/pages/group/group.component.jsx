@@ -54,10 +54,15 @@ class GroupPage extends React.Component {
             <div className="points">{totalScore} Points</div>
             <img className="grp_img" src={currGroup.image} alt="grp-img" />
             <div className="grp_name">{currGroup.name}</div>
-            <div className="grp_members">{currGroup.members[0]}</div>
+            {currGroup.members.map((mem) => (
+              <div className="grp_members">{mem}</div>
+            ))}
+            {/* <div className="grp_members">{currGroup.members[0]}</div>
+            <div className="grp_members">{currGroup.members[1]}</div>
+            <div className="grp_members">{currGroup.members[1]}</div>
             <div className="grp_members">{currGroup.members[1]}</div>
             <div className="grp_members">{currGroup.members[2]}</div>
-            <div className="grp_members">{currGroup.members[3]}</div>
+            <div className="grp_members">{currGroup.members[3]}</div> */}
 
             <div className="total_qn_count">
               {" "}

@@ -1,23 +1,49 @@
 .marker-container {
   display: flex;
   flex-direction: column;
-  background: lightgrey;
+  background: whitesmoke;
   padding: 20px 10px;
   align-items: center;
+  border-radius: 5%;
+  border: 3px solid grey;
 }
 
 .link {
   text-decoration: none;
   color: black;
+
+  font-size: 13px;
+  width: 90px;
+  height: 30px;
+  /* color: black; */
+  font-weight: bold;
+
+  background: #ec3f3f;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  line-height: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
 }
 
+.link:hover {
+  border: none;
+  /* background-color: #d32d2d; */
+  color: lightgray;
+
+  /* border: 1px solid #ec3f3f; */
+}
 .marker-title {
-  font-size: 20px;
+  font-size: 25px;
+  text-align: center;
+  /* font-weight: 700; */
 }
 .marker-locname {
   top: -5px;
   margin-left: 5px;
   position: relative;
+  color: red;
+  font-size: 13px;
 }
 
 .marker-points {

@@ -8,11 +8,12 @@ import { Place } from "@material-ui/icons";
 const MarkerCard = ({ questionTitle, link, locName, points, questionType }) => {
   return (
     <div className="marker-container">
-      <h1 className="marker-title">{questionTitle}</h1>
       <div>
-        <Place style={{ color: "red" }} />
+        <Place style={{ color: "red", fontSize: "20px" }} />
         <span className="marker-locname">{locName}</span>
       </div>
+
+      <div className="title marker-title">{questionTitle}</div>
 
       <div className="marker-points">{points} points</div>
       <div>
@@ -21,11 +22,14 @@ const MarkerCard = ({ questionTitle, link, locName, points, questionType }) => {
           : questionType}{" "}
         Question
       </div>
-      <CustomButton2>
+      {/* <CustomButton2>
         <Link to={link} className="link">
           view
         </Link>
-      </CustomButton2>
+      </CustomButton2> */}
+      <Link to={link} className="link">
+        view
+      </Link>
     </div>
   );
 };

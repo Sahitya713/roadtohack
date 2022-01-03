@@ -7,17 +7,23 @@ import "./signinpage.styles.css";
 const SignInPage = ({ history }) => {
   return (
     <div className="signin-page-container">
-      <img
-        src="https://roadtohack.s3.ap-southeast-1.amazonaws.com/CODE-X.png"
-        alt="code-x"
-        className="codex-logo"
-      />
-      <h2 className="title2">Hi there! Login to start your Quest!</h2>
+      <div>
+        <img
+          src="https://roadtohack.s3.ap-southeast-1.amazonaws.com/CODE-X.png"
+          alt="code-x"
+          className="codex-logo"
+        />
+        <h2 className="title2">Hi there! Login to start your Quest!</h2>
 
-      <SignIn />
+        <SignIn />
+      </div>
+      <div className="signin-page-line"></div>
+      <div>
+        {" "}
+        <h2 className="title2">Do not have an account? Register Below!</h2>
+        <SignUp />
+      </div>
 
-      <h2 className="title2">Do not have an account? Register Below!</h2>
-      <SignUp />
       {/* <button>Sign Up!</button> */}
     </div>
   );
