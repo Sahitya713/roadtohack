@@ -22,6 +22,7 @@ exports.manageQuestionFiles = multer({ storage }).fields([
 ]);
 
 exports.createQuestion = catchAsync(async (req, res, next) => {
+  console.log(req.body);
   req.body.location = JSON.parse(req.body.location);
 
   const name = req.body.title.split(" ").join("_");

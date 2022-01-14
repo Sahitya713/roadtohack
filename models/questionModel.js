@@ -38,6 +38,7 @@ const questionSchema = mongoose.Schema({
       message: "Question Type is either input, code, mcq or msq",
     },
   },
+  rationale: String,
   sampleInput: [String],
   sampleOutput: [String],
   input: String,

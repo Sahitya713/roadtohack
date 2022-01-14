@@ -50,7 +50,7 @@ const QuestionPage = ({ currQuestion, currAnswer }) => {
           return (
             <span key={idx} className="qnPage-question">
               {`${item}`}
-              <br />
+
               <br />
             </span>
           );
