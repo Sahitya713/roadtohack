@@ -22,3 +22,14 @@
   border-left: 2px solid rgba(0, 128, 128, 0.432);
   height: 620px;
 }
+
+@media screen and (max-width: 800px) {
+  .signin-page-container {
+    flex-direction: column;
+    padding: 50px 10px;
+  }
+
+  .signin-page-line {
+    display: none;
+  }
+}

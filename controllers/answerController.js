@@ -48,7 +48,7 @@ exports.createAnswer = catchAsync(async (req, res, next) => {
       req.body.userCode = codeLocation.Location;
     } else if (!answer) {
       return next(
-        new AppError("No prevous solution found but no code submitted", 401)
+        new AppError("No previous solution found but no code submitted", 401)
       );
     } else {
       req.body.userCode = answer.userCode;
@@ -85,7 +85,7 @@ exports.createAnswer = catchAsync(async (req, res, next) => {
 
     // calculate score for this qn
     const ratio = score / answers.length;
-    req.body.score = Math.round(question.points * ratio);
+    req.body.score = Math.round((question.points / 2) * ratio);
     req.body.userAnswers = answers;
   } else if (question.questionType === "code") {
     // upload code if there is no prev qn or there is a change to file

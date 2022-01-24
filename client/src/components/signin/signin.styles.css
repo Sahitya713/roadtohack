@@ -11,10 +11,6 @@
 
   margin-left: auto;
   margin-right: auto;
-
-  @media screen and (max-width: 800px) {
-    width: 80%;
-  }
 }
 .title {
   margin: 10px 0;
@@ -24,3 +20,11 @@
   display: flex;
   justify-content: space-between;
 } */
+@media screen and (max-width: 800px) {
+  .sign-in {
+    /* width: %; */
+    padding: 20px;
+    border: 5px solid lightgray;
+    align-items: center;
+  }
+}

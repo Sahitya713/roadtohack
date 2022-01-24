@@ -3,6 +3,8 @@ import ErrMessage from "../errMessage/errMessage.component";
 import CustomButton from "../custom-button/custom-button.component";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
+import { selectStatus } from "../../redux/challenge/challenge.selectors";
+import { statuses } from "../../redux/challenge/challenge.types";
 import { createAnswerStart } from "../../redux/answer/answer.actions";
 import { createStructuredSelector } from "reselect";
 import { downloadInputStart } from "../../redux/question/question.actions";
@@ -74,8 +76,13 @@ class CodeOptions extends React.Component {
   };
 
   render() {
-    const { downloadInputStart, downloadCodeStart, answer, question } =
-      this.props;
+    const {
+      downloadInputStart,
+      downloadCodeStart,
+      answer,
+      question,
+      challengeStatus,
+    } = this.props;
     const { comment, errMessage } = this.state;
 
     return (
@@ -139,7 +146,13 @@ class CodeOptions extends React.Component {
           />
 
           <ErrMessage message={errMessage} />
-          <CustomButton type="submit"> Submit</CustomButton>
+          <CustomButton
+            disabled={challengeStatus === statuses.O ? true : false}
+            type="submit"
+          >
+            {" "}
+            Submit
+          </CustomButton>
         </form>
       </div>
     );
@@ -148,6 +161,7 @@ class CodeOptions extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currUser: selectCurrentUser,
+  challengeStatus: selectStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({

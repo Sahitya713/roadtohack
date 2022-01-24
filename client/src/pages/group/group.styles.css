@@ -257,6 +257,8 @@
   font-size: large;
   font-family: "Quantico", sans-serif;
   padding-bottom: 10px;
+  text-decoration: none;
+  color: black;
 }
 
 .info {

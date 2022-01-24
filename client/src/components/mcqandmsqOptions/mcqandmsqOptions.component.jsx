@@ -4,7 +4,9 @@ import { questionTypes } from "../../redux/question/question.types";
 import ErrMessage from "../errMessage/errMessage.component";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
+import { selectStatus } from "../../redux/challenge/challenge.selectors";
 import { createAnswerStart } from "../../redux/answer/answer.actions";
+import { statuses } from "../../redux/challenge/challenge.types";
 import { createStructuredSelector } from "reselect";
 import FormInputTextArea from "../form-input-textarea/form-input-textarea.component";
 import { Check, Close } from "@material-ui/icons";
@@ -78,8 +80,8 @@ class McqAndMsqOptions extends React.Component {
 
   render() {
     const { selectedOptions, errMessage, comment } = this.state;
-    const { answer, question } = this.props;
-    const { options, questionType } = question;
+    const { answer, question, challengeStatus } = this.props;
+    const { options, questionType, rationale } = question;
     console.log(answer);
     console.log(selectedOptions);
     return (
@@ -144,9 +146,34 @@ class McqAndMsqOptions extends React.Component {
             disabled={this.props.answer ? true : false}
           />
 
+          {/* <div className="sample-title">Rationale for Solution:</div>
+          <div className="sample-box" style={{ background: "lightgreen" }}>
+            {rationale}
+          </div> */}
+
+          {rationale && answer && (
+            <div
+              className="sample-box"
+              style={{ margin: "30px 0px", border: "5px solid lightgreen" }}
+            >
+              <h3>Rationale for solution:</h3>
+              {rationale.split(/\\r\\n|\\n|\\r|\r|\n/).map((item, idx) => {
+                return (
+                  <div key={idx} className="questionDetail-question">
+                    {`${item}`}
+                    {/* <br /> */}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
           <ErrMessage message={errMessage} />
 
-          <CustomButton disabled={answer ? true : false} type="submit">
+          <CustomButton
+            disabled={answer || challengeStatus === statuses.F ? true : false}
+            type="submit"
+          >
             Submit
           </CustomButton>
         </form>
@@ -157,6 +184,7 @@ class McqAndMsqOptions extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currUser: selectCurrentUser,
+  challengeStatus: selectStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({

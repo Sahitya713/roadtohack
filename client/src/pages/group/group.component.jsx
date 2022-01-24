@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
+import { Link } from "react-router-dom";
 
 import "./group.styles.css";
 // import { Edit, Clear } from "@material-ui/icons";
@@ -54,8 +55,10 @@ class GroupPage extends React.Component {
             <div className="points">{totalScore} Points</div>
             <img className="grp_img" src={currGroup.image} alt="grp-img" />
             <div className="grp_name">{currGroup.name}</div>
-            {currGroup.members.map((mem) => (
-              <div className="grp_members">{mem}</div>
+            {currGroup.members.map((mem, idx) => (
+              <div key={idx} className="grp_members">
+                {mem}
+              </div>
             ))}
             {/* <div className="grp_members">{currGroup.members[0]}</div>
             <div className="grp_members">{currGroup.members[1]}</div>
@@ -78,7 +81,13 @@ class GroupPage extends React.Component {
                 return (
                   <div className="left_container" key={idx}>
                     <div className="left_details">
-                      <div className="qn_title">{question.title}</div>
+                      <Link
+                        to={`/question/${question.slug}`}
+                        className="qn_title"
+                      >
+                        {question.title}
+                      </Link>
+
                       <div className="info">
                         Score: {score}/{question.points} <br></br>
                         Member: {user}
@@ -90,7 +99,12 @@ class GroupPage extends React.Component {
                 return (
                   <div className="right_container" key={idx}>
                     <div className="right_details">
-                      <div className="qn_title">{question.title}</div>
+                      <Link
+                        to={`/question/${question.slug}`}
+                        className="qn_title"
+                      >
+                        {question.title}
+                      </Link>
                       <div className="info">
                         Score: {score}/{question.points} <br></br>
                         Member: {user}

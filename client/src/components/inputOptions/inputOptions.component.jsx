@@ -6,6 +6,8 @@ import CustomButton3 from "../custom-button3/custom-button3.component";
 import FormInputTextArea from "../form-input-textarea/form-input-textarea.component";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
+import { selectStatus } from "../../redux/challenge/challenge.selectors";
+import { statuses } from "../../redux/challenge/challenge.types";
 import { createAnswerStart } from "../../redux/answer/answer.actions";
 import { createStructuredSelector } from "reselect";
 import { downloadCodeStart } from "../../redux/answer/answer.actions";
@@ -110,8 +112,9 @@ class InputOptions extends React.Component {
   render() {
     console.log(this.props);
     // const { downloadInputStart } = this.props;
-    const { answer, downloadCodeStart } = this.props;
-    const { sampleInput, sampleOutput, inputs } = this.props.question;
+    const { answer, downloadCodeStart, challengeStatus } = this.props;
+    const { sampleInput, sampleOutput, inputs, rationale } =
+      this.props.question;
     const { userAnswers, errMessage, comment } = this.state;
 
     return (
@@ -241,8 +244,31 @@ class InputOptions extends React.Component {
             // disabled={answer ? true : false}
           />
 
+          {rationale && answer && (
+            <div
+              className="sample-box"
+              style={{ margin: "30px 0px", border: "5px solid lightgreen" }}
+            >
+              <h3>Rationale for solution:</h3>
+              {rationale.split(/\\r\\n|\\n|\\r|\r|\n/).map((item, idx) => {
+                return (
+                  <div key={idx} className="questionDetail-question">
+                    {`${item}`}
+                    {/* <br /> */}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
           <ErrMessage message={errMessage} />
-          <CustomButton type="submit"> Submit</CustomButton>
+          <CustomButton
+            disabled={challengeStatus === statuses.F ? true : false}
+            type="submit"
+          >
+            {" "}
+            Submit
+          </CustomButton>
         </form>
       </div>
     );
@@ -251,6 +277,7 @@ class InputOptions extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currUser: selectCurrentUser,
+  challengeStatus: selectStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
