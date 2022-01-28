@@ -43,9 +43,11 @@ class McqAndMsqOptions extends React.Component {
     }
 
     const { question, currUser, createAnswer } = this.props;
+
     await createAnswer({
       question: question._id,
       user: currUser._id,
+      group: currUser.group,
       selectedOptions,
       comment,
     });
@@ -136,6 +138,23 @@ class McqAndMsqOptions extends React.Component {
             ))}
           </div>
 
+          {rationale && answer && (
+            <div
+              className="sample-box"
+              style={{ margin: "30px 0px", border: "5px solid lightgreen" }}
+            >
+              <h3>Explanation of solution:</h3>
+              {rationale.split(/\\r\\n|\\n|\\r|\r|\n/).map((item, idx) => {
+                return (
+                  <div key={idx} className="questionDetail-question">
+                    {`${item}`}
+                    {/* <br /> */}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
           <FormInputTextArea
             label="Additional Comments:"
             name="comment"
@@ -150,23 +169,6 @@ class McqAndMsqOptions extends React.Component {
           <div className="sample-box" style={{ background: "lightgreen" }}>
             {rationale}
           </div> */}
-
-          {rationale && answer && (
-            <div
-              className="sample-box"
-              style={{ margin: "30px 0px", border: "5px solid lightgreen" }}
-            >
-              <h3>Rationale for solution:</h3>
-              {rationale.split(/\\r\\n|\\n|\\r|\r|\n/).map((item, idx) => {
-                return (
-                  <div key={idx} className="questionDetail-question">
-                    {`${item}`}
-                    {/* <br /> */}
-                  </div>
-                );
-              })}
-            </div>
-          )}
 
           <ErrMessage message={errMessage} />
 

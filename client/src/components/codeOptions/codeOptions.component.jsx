@@ -3,6 +3,7 @@ import ErrMessage from "../errMessage/errMessage.component";
 import CustomButton from "../custom-button/custom-button.component";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
+import { selectCurrGroup } from "../../redux/group/group.selectors";
 import { selectStatus } from "../../redux/challenge/challenge.selectors";
 import { statuses } from "../../redux/challenge/challenge.types";
 import { createAnswerStart } from "../../redux/answer/answer.actions";
@@ -37,7 +38,7 @@ class CodeOptions extends React.Component {
   }
 
   handleSubmit = (e) => {
-    const { question, currUser, createAnswer } = this.props;
+    const { question, currUser, createAnswer, currGroup } = this.props;
     e.preventDefault();
     var { userCode, changed, comment } = this.state;
 
@@ -52,6 +53,8 @@ class CodeOptions extends React.Component {
       createAnswer({
         question: question._id,
         user: currUser._id,
+        group: currUser.group,
+        groupName: currGroup.name,
         userCode,
         comment,
       });
@@ -59,6 +62,8 @@ class CodeOptions extends React.Component {
       createAnswer({
         question: question._id,
         user: currUser._id,
+        group: currUser.group,
+        groupName: currGroup.name,
         comment,
       });
     }
@@ -161,6 +166,7 @@ class CodeOptions extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currUser: selectCurrentUser,
+  currGroup: selectCurrGroup,
   challengeStatus: selectStatus,
 });
 

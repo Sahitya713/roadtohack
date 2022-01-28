@@ -15,51 +15,60 @@ const Header = ({ signOutStart, toggleEdit, match }) => {
   const route = location.pathname.split("/").pop();
   return (
     <div className="header">
-      <Menu
-        className="burger"
-        onClick={() => {
-          setNav(!nav);
-          console.log("hello from nav");
-        }}
-      />
-      <div className={nav ? "options options-active" : "options"}>
-        <Link
-          className={`home-opt ${match.isExact ? "option-selected" : "option"}`}
-          to={`${match.url}`}
-        >
-          HOME
-        </Link>
-        <Link
-          className={route === "group" ? "option-selected" : "option"}
-          to={`/group`}
-        >
-          Group
-        </Link>
-        <Link
-          className={route === "leaderboard" ? "option-selected" : "option"}
-          to={`/leaderboard`}
-        >
-          Leaderboard
-        </Link>
-        <Link
-          className={route === "faq" ? "option-selected" : "option"}
-          to={`/faq`}
-        >
-          FAQ
-        </Link>
+      <div className="mobile-header">
+        <Menu
+          className="burger"
+          style={{ fontSize: "30px" }}
+          onClick={() => {
+            setNav(!nav);
+            console.log("hello from nav");
+          }}
+        />
       </div>
-      <div className="buttons">
-        {route === "group" ? (
-          <CustomButton2
-            style={{ backgroundColor: "rgb(40, 175, 40)" }}
-            onClick={toggleEdit}
+
+      <div className={nav ? "options-wrap options-active" : "options-wrap"}>
+        <div className="options">
+          <Link
+            className={`home-opt ${
+              match.isExact ? "option-selected" : "option"
+            }`}
+            to={`${match.url}`}
           >
-            Edit
-          </CustomButton2>
-        ) : (
-          <div></div>
-        )}
-        <CustomButton2 onClick={signOutStart}>Sign Out</CustomButton2>
+            HOME
+          </Link>
+          <Link
+            className={route === "group" ? "option-selected" : "option"}
+            to={`/group`}
+          >
+            Group
+          </Link>
+          <Link
+            className={route === "leaderboard" ? "option-selected" : "option"}
+            to={`/leaderboard`}
+          >
+            Leaderboard
+          </Link>
+          <Link
+            className={route === "faq" ? "option-selected" : "option"}
+            to={`/faq`}
+          >
+            FAQ
+          </Link>
+        </div>
+
+        <div className="buttons">
+          {route === "group" ? (
+            <CustomButton2
+              style={{ backgroundColor: "rgb(40, 175, 40)" }}
+              onClick={toggleEdit}
+            >
+              Edit
+            </CustomButton2>
+          ) : (
+            <div></div>
+          )}
+          <CustomButton2 onClick={signOutStart}>Sign Out</CustomButton2>
+        </div>
       </div>
     </div>
   );

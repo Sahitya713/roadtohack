@@ -11,3 +11,7 @@ export const selectGroupEdit = createSelector(
   [selectGroup],
   (group) => group.isEditTriggered
 );
+
+export const selectGroupError = createSelector([selectGroup], (group) => {
+  return group.errorMessage;
+});

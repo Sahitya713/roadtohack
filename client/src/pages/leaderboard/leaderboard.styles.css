@@ -8,6 +8,8 @@
 }
 
 .lb-note {
+  width: 100%;
+  padding: 0px 30px;
   color: red;
 }
 
@@ -20,4 +22,13 @@
   backdrop-filter: blur(10px);
   padding: 30px 0px;
   /* height: 30%; */
+}
+
+@media screen and (max-width: 800px) {
+  .lb-scores-wrap {
+    width: 80%;
+
+    padding: 20px 0px;
+    /* height: 30%; */
+  }
 }

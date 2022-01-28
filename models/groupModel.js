@@ -5,6 +5,13 @@ const groupSchema = mongoose.Schema({
     type: String,
     required: true,
     maxLength: [20, "The group name must not be more than 20 characters"],
+
+    validate: {
+      validator: function (val) {
+        return val.match(/^[\w\-\s]+$/);
+      },
+      message: "A Group name must only contain alphabets or numbers",
+    },
     trim: true,
   },
   image: {

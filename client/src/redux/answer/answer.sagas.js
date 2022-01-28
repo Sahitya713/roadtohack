@@ -36,6 +36,11 @@ export function* createAnswerAsync(action) {
     const { payload } = action;
     formdata.append("user", payload.user);
     formdata.append("question", payload.question);
+    formdata.append("group", payload.group);
+    if (payload.groupName) {
+      formdata.append("groupName", payload.groupName);
+    }
+
     if (payload.comment) {
       formdata.append("comment", payload.comment);
     }

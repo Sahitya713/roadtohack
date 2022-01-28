@@ -80,7 +80,7 @@ class SignUp extends React.Component {
             name="group"
             value={group}
             onChange={this.handleChange}
-            label="Group"
+            label="Group Code"
             required
           />
           <FormInput

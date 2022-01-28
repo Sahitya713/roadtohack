@@ -6,8 +6,12 @@ import { Close } from "@material-ui/icons";
 
 import "./group-edit.styles.css";
 import { updateGroupStart, toggleEdit } from "../../redux/group/group.actions";
-import { selectCurrGroup } from "../../redux/group/group.selectors";
+import {
+  selectCurrGroup,
+  selectGroupError,
+} from "../../redux/group/group.selectors";
 import CustomButton from "../custom-button/custom-button.component";
+import ErrMessage from "../../components/errMessage/errMessage.component";
 
 import FormInput from "../form-input/form-input.component";
 class GroupEditPopUp extends React.Component {
@@ -58,7 +62,7 @@ class GroupEditPopUp extends React.Component {
       groupId: currGroup._id,
       group: update,
     });
-    toggleEdit();
+    // toggleEdit();
   };
 
   render() {
@@ -70,6 +74,11 @@ class GroupEditPopUp extends React.Component {
         <div className="grp-edit-overlay">
           <Close onClick={toggleEdit} className="close-group" />
           <h2 className="title grp-edit-title">Edit your Group Details</h2>
+          {this.props.groupError ? (
+            <ErrMessage message={this.props.groupError} />
+          ) : (
+            <div />
+          )}
           <form className="grp-edit-form" onSubmit={this.handleSubmit}>
             <img className="grp-img-edit" src={displayImage} alt="grp-img" />
             <br />
@@ -108,6 +117,7 @@ class GroupEditPopUp extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currGroup: selectCurrGroup,
+  groupError: selectGroupError,
 });
 
 const mapDispatchToProps = (dispatch) => ({

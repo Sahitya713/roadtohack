@@ -20,6 +20,7 @@ const groupReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isFetching: false,
         currGroup: action.payload,
+        errorMessage: undefined,
       };
     case groupActionTypes.FETCH_GROUP_FAILURE:
     case groupActionTypes.UPDATE_GROUP_FAILURE:
@@ -32,6 +33,7 @@ const groupReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isEditTriggered: !state.isEditTriggered,
+        errorMessage: undefined,
       };
 
     default:

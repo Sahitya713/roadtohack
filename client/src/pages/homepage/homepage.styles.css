@@ -116,3 +116,14 @@
 .marker-popup-overlay {
   z-index: 99 !important;
 }
+
+@media screen and (max-width: 800px) {
+  .homepage-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 70%;
+
+    overflow-x: scroll;
+  }
+}

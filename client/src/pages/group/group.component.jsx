@@ -20,9 +20,9 @@ import {
   selectCurrGroup,
   selectGroupEdit,
 } from "../../redux/group/group.selectors";
-import MemberScore from "../../components/memberScore/memberScore.component";
+
 import GroupEditPopUp from "../../components/group-edit/group-edit-popup.component";
-import { answerSagas } from "../../redux/answer/answer.sagas";
+
 // import FormInput from "../../components/form-input/form-input.component";
 
 class GroupPage extends React.Component {
@@ -60,12 +60,6 @@ class GroupPage extends React.Component {
                 {mem}
               </div>
             ))}
-            {/* <div className="grp_members">{currGroup.members[0]}</div>
-            <div className="grp_members">{currGroup.members[1]}</div>
-            <div className="grp_members">{currGroup.members[1]}</div>
-            <div className="grp_members">{currGroup.members[1]}</div>
-            <div className="grp_members">{currGroup.members[2]}</div>
-            <div className="grp_members">{currGroup.members[3]}</div> */}
 
             <div className="total_qn_count">
               {" "}

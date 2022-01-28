@@ -6,6 +6,7 @@ import CustomButton3 from "../custom-button3/custom-button3.component";
 import FormInputTextArea from "../form-input-textarea/form-input-textarea.component";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
+import { selectCurrGroup } from "../../redux/group/group.selectors";
 import { selectStatus } from "../../redux/challenge/challenge.selectors";
 import { statuses } from "../../redux/challenge/challenge.types";
 import { createAnswerStart } from "../../redux/answer/answer.actions";
@@ -44,7 +45,7 @@ class InputOptions extends React.Component {
   }
 
   handleSubmit = (e) => {
-    const { question, currUser, createAnswer } = this.props;
+    const { question, currUser, createAnswer, currGroup } = this.props;
     e.preventDefault();
     var { userAnswers, userCode, changed, comment } = this.state;
     console.log(userAnswers);
@@ -61,11 +62,14 @@ class InputOptions extends React.Component {
       });
       return;
     }
+    console.log(currGroup);
 
     if (changed) {
       createAnswer({
         question: question._id,
         user: currUser._id,
+        group: currUser.group,
+        groupName: currGroup.name,
         userAnswers,
         userCode,
         comment,
@@ -144,13 +148,13 @@ class InputOptions extends React.Component {
           <h2 className="code-options-titles">Your Solution</h2>
 
           <div className="code-options-instructions">
-            Please type down your answer to each of the inputs below. If the
-            expected output is a list/ array, seperate each of the elements in
-            the list with a comma (,).
+            Please type down your answer to each of the inputs below. Copy and
+            paste from the output that your function return for the respective
+            inputs.
           </div>
-          <div className="code-options-instructions">
+          {/* <div className="code-options-instructions">
             {"E.g. [1,2,3] -> 1,2,3"}
-          </div>
+          </div> */}
           <div className="inputs-container">
             {inputs.map((inp, idx) => (
               <div key={idx} className="input-overlay">
@@ -198,6 +202,21 @@ class InputOptions extends React.Component {
             ))}
           </div>
 
+          <div className="code-options-instructions">
+            Please also upload a python file containing the code that helped you
+            arrive at your answer.
+          </div>
+          <div className="download-container">
+            <div className="download-label">Code File: </div>
+
+            <input
+              type="file"
+              onChange={this.handleFileChange}
+              id="codeFile"
+              name="userCode"
+              accept=".py"
+            />
+          </div>
           {answer && (
             <div className="code-options-container">
               <span className="code-options-instructions">
@@ -218,38 +237,13 @@ class InputOptions extends React.Component {
               </div>
             </div>
           )}
-          <div className="code-options-instructions">
-            Please also upload a python file containing the code that helped you
-            arrive at your answer.
-          </div>
-          <div className="download-container">
-            <div className="download-label">Code File: </div>
 
-            <input
-              type="file"
-              onChange={this.handleFileChange}
-              id="codeFile"
-              name="userCode"
-              accept=".py"
-            />
-          </div>
-
-          <FormInputTextArea
-            label="Additional Comments:"
-            name="comment"
-            value={comment}
-            handleChange={this.handleChange}
-            rows="5"
-            cols="50"
-            // disabled={answer ? true : false}
-          />
-
-          {rationale && answer && (
+          {rationale && answer && answer.isAnswerCorrect && (
             <div
               className="sample-box"
               style={{ margin: "30px 0px", border: "5px solid lightgreen" }}
             >
-              <h3>Rationale for solution:</h3>
+              <h3>Explanation of solution:</h3>
               {rationale.split(/\\r\\n|\\n|\\r|\r|\n/).map((item, idx) => {
                 return (
                   <div key={idx} className="questionDetail-question">
@@ -260,6 +254,16 @@ class InputOptions extends React.Component {
               })}
             </div>
           )}
+
+          <FormInputTextArea
+            label="Additional Comments:"
+            name="comment"
+            value={comment}
+            handleChange={this.handleChange}
+            rows="5"
+            cols="50"
+            // disabled={answer ? true : false}
+          />
 
           <ErrMessage message={errMessage} />
           <CustomButton
@@ -277,6 +281,7 @@ class InputOptions extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currUser: selectCurrentUser,
+  currGroup: selectCurrGroup,
   challengeStatus: selectStatus,
 });
 

@@ -23,6 +23,11 @@ const answerSchema = mongoose.Schema({
     ref: "User",
     required: [true, "An answer must be submitted by a user"],
   },
+  group: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Group",
+    required: [true, "An answer must be submitted by a Group"],
+  },
   isAnswerCorrect: {
     type: Boolean,
     default: true,
@@ -54,6 +59,10 @@ answerSchema.index(
   { user: 1, question: 1 },
   { unique: [true, "A user can only answer a question once"] }
 );
+// answerSchema.index(
+//   { group: 1, question: 1 },
+//   { unique: [true, "A group can only answer a question once"] }
+// );
 answerSchema.pre(/^find/, function (next) {
   this.populate({
     path: "question",

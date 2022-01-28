@@ -39,7 +39,9 @@ const QuestionPage = ({ currQuestion, currAnswer }) => {
         <div>
           <img src={Star} alt="star" className="points-star" />
           <div className="points-qnPage">
-            <div className="points-no">{points}</div>
+            <div className="points-no">
+              {questionType === "input" ? points / 2 : points}
+            </div>
             <div className="points-points">points</div>
           </div>
         </div>

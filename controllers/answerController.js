@@ -18,13 +18,23 @@ const storage = multer.memoryStorage({
 });
 exports.manageCodeFile = multer({ storage }).single("userCode");
 
+const strip = (x, characters) => {
+  var start = 0;
+  while (characters.indexOf(x[start]) >= 0) {
+    start += 1;
+  }
+  var end = x.length - 1;
+  while (characters.indexOf(x[end]) >= 0) {
+    end -= 1;
+  }
+  return x.substr(start, end - start + 1);
+};
 exports.createAnswer = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   const question = await Question.findById(req.body.question);
   // const user = await User.findById(req.body.user);
   const answer = await Answer.findOne({
     question: req.body.question,
-    user: req.body.user,
+    group: req.body.group,
   });
 
   if (!question) {
@@ -36,7 +46,9 @@ exports.createAnswer = catchAsync(async (req, res, next) => {
   if (question.questionType == "input") {
     // upload code if there is no prev qn or there is a change to file
     if (req.file) {
-      const name = question.title.split(" ").join("_");
+      var name = question.title.split(" ").join("_");
+      var grpName = req.body.groupName.split(" ").join("_");
+      name = name + "-" + grpName;
 
       const codeLocation = await awsManager.uploadFile(
         req.file,
@@ -63,7 +75,13 @@ exports.createAnswer = catchAsync(async (req, res, next) => {
       var answerObject = {};
       answerObject["userAnswer"] = ans;
       answerObject["correct"] = true;
+
+      ans = strip(ans, " ");
+      ans = strip(ans, "]");
+      ans = strip(ans, "[");
+
       const ansU = ans.split(",");
+
       const ansA = question.correctAnswers[idx].split(",");
       if (ansU.length !== ansA.length) {
         answerObject["correct"] = false;
@@ -97,12 +115,11 @@ exports.createAnswer = catchAsync(async (req, res, next) => {
         "User-Code",
         name
       );
-      console.log(codeLocation);
 
       req.body.userCode = codeLocation.Location;
     } else if (!answer) {
       return next(
-        new AppError("No prevous solution found but no code submitted", 401)
+        new AppError("No previous solution found but no code submitted", 401)
       );
     } else {
       req.body.userCode = answer.userCode;
@@ -127,8 +144,10 @@ exports.createAnswer = catchAsync(async (req, res, next) => {
     req.body.score = req.body.isAnswerCorrect ? question.points : 0;
   }
 
-  console.log(req.body);
-  if (answer) {
+  if (
+    answer &&
+    (question.questionType === "code" || question.questionType === "input")
+  ) {
     await Answer.findByIdAndDelete(answer._id);
   }
   let doc = await Answer.create(req.body);
@@ -188,7 +207,6 @@ exports.updateScore = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllAnswersByQuestion = catchAsync(async (req, res, next) => {
-  console.log(req.params.questionId);
   let doc = await Answer.aggregate([
     {
       $lookup: {
@@ -223,13 +241,11 @@ exports.getAllAnswersByQuestion = catchAsync(async (req, res, next) => {
   ]);
   doc = await Promise.all(
     doc.map(async (e) => {
-      // const group = e.group;
-      // console.log(e);
       var docuObject = {};
       docuObject = e;
       var grp = await Group.findById(e.group);
       docuObject["groupName"] = grp.name;
-      console.log(docuObject);
+
       return docuObject;
     })
   );
@@ -292,8 +308,6 @@ exports.getAllAnswersByGroup = catchAsync(async (req, res, next) => {
 
 // get the group scores to display on grp page
 exports.getGroupAnswers = catchAsync(async (req, res, next) => {
-  // let doc = await Answer.find({ "user.group": req.params.groupId });
-  // console.log(req.params.groupId);
   let doc = await Answer.aggregate([
     {
       $lookup: {

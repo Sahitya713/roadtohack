@@ -5,6 +5,7 @@ import {
   fetchGroupSuccess,
   updateGroupFailure,
   updateGroupSuccess,
+  toggleEdit,
 } from "./group.actions";
 import UserActionTypes from "../user/user.types";
 // import groupActionTypes from "./group.types";
@@ -47,6 +48,7 @@ export function* updateGroupAsync(action) {
     const grp = res.data.data;
 
     yield put(updateGroupSuccess(grp));
+    yield put(toggleEdit());
   } catch (error) {
     yield put(updateGroupFailure(error.response.data.message));
   }
